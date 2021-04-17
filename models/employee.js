@@ -13,6 +13,11 @@ const employeeSchema = new Scehma({
         }
     },
 
+    userType : {
+        type : String,
+        required : true
+    },
+
     hierarchy : {
         type : String,
         required : true
