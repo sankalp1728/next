@@ -1,0 +1,22 @@
+{
+  "name": "next",
+  "version": "1.0.0",
+  "description": "Applicant Tracking System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Shekhar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.12.2",
+    "nodemon": "^2.0.7",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.6",
+    "update": "^0.4.2"
+  }
+}
