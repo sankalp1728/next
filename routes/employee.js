@@ -4,7 +4,7 @@ const Employee = require('../models/employee')
 const mongoose = require('mongoose')
 const generatePassword = require('../middleware/password_generator')
 const bcrypt = require('bcrypt')
-const nodemailer = require()
+const nodemailer = require('nodemailer')
 
 
 router.post('/employee/add',()=>{
@@ -16,7 +16,7 @@ router.post('/employee/add',()=>{
         const employee = new Employee(req.body)
         await employee.save()
 
-        //nodemailer
+        
         
     }catch(err){
 

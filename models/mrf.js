@@ -15,7 +15,7 @@ const mrfSchema = new Schema({
 
         replacement_id : {
             type : String,
-            required : true
+            required : false
         }, // approval matrix diff for new and replacement positions, defined by the client
         
         
@@ -39,12 +39,12 @@ const mrfSchema = new Schema({
     department_head : {
         type : String,
         required : true
-    }, 
+    },  
 
     sub_dep_head : {
         type : String,
         required : true
-    },
+    }, 
 
     location : {
         type : String,
@@ -62,8 +62,18 @@ const mrfSchema = new Schema({
     },
     
     specification : {
-        type : String,
-        required : true
+        age : {
+            type : Number,
+            required : false
+        },
+        rel_exp : {
+            type : Number,
+            required : False
+        },
+        total_exp : {
+            type : Number,
+            required : False
+        }
     },
 
     diversity : {
@@ -101,7 +111,33 @@ const mrfSchema = new Schema({
         validate(value){
             const arr = ["unapproved", "open" , "closed", "overdue"]
         }
-    }
+    },
+
+    candidate : {
+        requirement : {
+            type : Number,
+            required : true
+        },
+        lined_up : {
+            type : Number,
+            required : true
+        },
+        interviewed : {
+            type : Number,
+            required : true
+        },
+        shortlisted : {
+            type : Number,
+            required : true
+        },
+
+    },
+
+    approver_status : [
+        {
+            type : String, 
+        }
+    ]
     
 })
 

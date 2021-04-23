@@ -15,12 +15,18 @@ const employeeSchema = new Scehma({
 
     userType : {
         type : String,
-        required : true
+        required : true // priveledges - admin, recruiter, vendor, employee
     },
 
     hierarchy : {
-        type : String,
-        required : true
+        type: {
+            type :String,
+            required : true
+        },
+        name : {
+            type : String,
+            required : true
+        }
     },
 
     designation : {

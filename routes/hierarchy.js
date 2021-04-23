@@ -2,14 +2,19 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const hierarchy = require('../models/heirarchy')
+const passport  = require('../authentication/Passport')
 
 
-const mognoose = require('mongoose')
-const herModel = require('../models/heirarchy')
 
-
-router.post("/hierarchy/add",async(req,res) => {
+router.post('/hierarchy/add',async(req,res) => {
     try{
+
+        // if(req.user.userType !== "admin"){
+        //     return res.send({
+        //         user : "not permitted"
+        //     })
+        // }
+
         const entity = new hierarchy(req.body)
         await entity.save()
         console.log(entity)
@@ -19,6 +24,17 @@ router.post("/hierarchy/add",async(req,res) => {
 
     }catch(err){
         console.log(err);
+        res.send(err)
+    }
+})
+
+router.post("/heirarchy/show", async(req,res)=>{
+    try{
+        const type = req.body.type;
+        const data = await (await hierarchy.find({hier_type : type}))
+        res.json(data)
+    }catch(err){
+        console.log(err)
         res.send(err)
     }
 })
@@ -35,9 +51,9 @@ router.post("/hierarchy/remove", async(req,res) => {
 
         if(req.body.type === "Department"){
             const data = await hierarchy.find({parent : entity.name})
-            data.forEach((data)=>{
+            for(i=0 ; i<data.length ; i++){
                 const child = await hierarchy.deleteMany({parent : data.name})
-            })
+            }
         }
 
         if(req.body.type === "Sub-Dep"){
