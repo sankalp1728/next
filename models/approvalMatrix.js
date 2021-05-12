@@ -15,5 +15,15 @@ const apporvalMatrixSchema = new Scehma({
         type : String,
         required : true
     },
+    verified : {
+        type : Boolean,
+        Required : true
+    },
+    TAT : {
+        type : Date,
+        required : true
+    },
     approvers : [{type : String}]
 })
+
+// approver TAT redifining >> << Time pe notification, system, email

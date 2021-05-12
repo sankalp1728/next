@@ -12,10 +12,26 @@ const interviewSchema = new Scehma({
         required : true
     },
 
-    candidate_id : {
-        type :String,
+    type : {
+        type : String,
         required : true
+            // group, solo
     },
+
+    candidate_status : [{ // this is for updating the status, availabilbity and the result of the candidate
+
+        candidate_id : {
+            type : String,
+            required : true 
+        },
+        candidate_status : {
+            type : String,
+            required : true,
+
+            
+        }
+    
+    }],
 
     roundNumber : {
         type : Number,

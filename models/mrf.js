@@ -31,6 +31,11 @@ const mrfSchema = new Schema({
         required : true
     },
 
+    team : {
+        type : String,
+        required : true
+    },
+
     reporting_manager : {
         type : String,
         required : true
@@ -73,6 +78,10 @@ const mrfSchema = new Schema({
         total_exp : {
             type : Number,
             required : False
+        },
+        education : {
+            type : String,
+            required : true
         }
     },
 
@@ -89,11 +98,13 @@ const mrfSchema = new Schema({
     }, // approval date
 
     //company will define TAT(unique for each mrf)
-
+    //company will decide  TAT or end date
     end_date : {
         type : Date,
         required : true
     }, // end date bulk mrf changes, and TAT separate
+
+
 
     job_type : {
         type : String, 
@@ -109,12 +120,16 @@ const mrfSchema = new Schema({
         required : true,
 
         validate(value){
-            const arr = ["unapproved", "open" , "closed", "overdue"]
+            const arr = ["unapproved","rejected" , "open" , "closed", "overdue"]
         }
     },
 
     candidate : {
         requirement : {
+            type : Number,
+            required : true
+        },
+        screening : {
             type : Number,
             required : true
         },
@@ -133,14 +148,13 @@ const mrfSchema = new Schema({
 
     },
 
-    approver_status : [
-        {
-            type : String, 
-        }
-    ]
+    remarks : {
+        type : String,
+        required : true
+    }
     
 })
 
 // every mrf will be shared with each HR recruiters
-// HR task assignment 1. manually 2. Automated 2.1. unitary method 2.2. department-vise 2.3. skill-based
+// HR task assignment 1. manually 2. Automated 2.1. odd even 2.2. department-vise 2.3. skill-based
 // dynamically change the database schema...(calculation of development efforts)

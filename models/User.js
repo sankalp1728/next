@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Scehma = mongoose.Schema
 
-const employeeSchema = new Scehma({
+const UserSchema = new Scehma({
     name : {
         firstName : {
             type : String,
@@ -15,8 +15,13 @@ const employeeSchema = new Scehma({
 
     userType : {
         type : String,
-        required : true // priveledges - admin, recruiter, vendor, employee
+        required : true // priveledges - admin, recruiter, vendor, employee, interviewer
     },
+
+    userAccess : {
+        type : String,
+        required : true
+    },      // in case special permission, name = special, is to be reffered for access
 
     hierarchy : {
         type: {
@@ -41,7 +46,7 @@ const employeeSchema = new Scehma({
 
     diversity : {
         type : String,
-        required : true // aurat , langda hi, challenged
+        required : true // challenged
     },
     
     email : {
@@ -51,7 +56,7 @@ const employeeSchema = new Scehma({
 
     password : {
         type : String,
-        required : true // encryption bcrypt.js
+        required : true // encryption bcrypt.js, SHA256
     },
 
     location : {
@@ -60,8 +65,8 @@ const employeeSchema = new Scehma({
     }
 })
 
-const employeeModel = mongoose.model("employee", employeeSchema)
-module.exports = employeeModel
+const UserModel = mongoose.model("User", UserSchema)
+module.exports = UserModel
 
 
 //username password jwt passport

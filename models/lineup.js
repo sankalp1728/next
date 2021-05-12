@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const lineUpSchema = new Schema({
 
-    candidate : [Number],
+    candidate : [String],
     slotStart : Date,
     slotEnd : Date,
     candidateId : Number,
@@ -11,3 +11,5 @@ const lineUpSchema = new Schema({
 })
 
 module.exports = mongoose.model("LineUpSchema",lineUpSchema);
+
+// only info to interviewers no approval

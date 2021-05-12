@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const validator = require('validator')
-const { validate } = require('./employee')
+const { validate } = require('./User')
 
-const herSchema = Schema({
+const hierSchema = Schema({
     
     hier_type : {
         type : String,
@@ -30,6 +30,6 @@ const herSchema = Schema({
     })
 
 
-const herModel = mongoose.model("hierarchy",herSchema)
+const hierModel = mongoose.model("hierarchy",hierSchema)
 
-module.exports = herModel
+module.exports = hierModel

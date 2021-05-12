@@ -8,6 +8,11 @@ const candidateSchema = new Scehma({
         required : true
     },
 
+    mrfID : {
+        tpye : String,
+        required : true
+    },
+
     photo : {
         type : String,
         required : true
@@ -78,16 +83,23 @@ const candidateSchema = new Scehma({
         required : true
     },
 
+    recruiterID : {
+        type : String,
+        required : false
+    },
+
     sourcetype : {
         type : String,
-        required : true
+        required : false
         //vendor,referral,HR,Portal
     },
 
-    sourceName : {
+    SourceID : {
         type : String,
-        required : true
+        required : false
     },
+
+    BCK
 
     employement : {
         total_experience : {
@@ -107,3 +119,6 @@ const candidateSchema = new Scehma({
     },
 
 })
+
+// screening steps will be addded as per the approval requirements
+// screening approvals will be in control of HR. Can skip bussiness people.

@@ -1,0 +1,1 @@
+// contains the locations of all the branches of the office or the location of employees, used to run searches in the dropdowns
