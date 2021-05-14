@@ -36,6 +36,11 @@ const mrfSchema = new Schema({
         required : true
     },
 
+    skillsRequired : [{
+        type : String,
+        
+    }]
+
     reporting_manager : {
         type : String,
         required : true

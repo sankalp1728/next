@@ -3,7 +3,7 @@ const Scehma = mongoose.Schema
 
 const interviewMatrixSchema = new Scehma({
 
-    mrf_id : {
+    position : {
         type : String,
         required : true
     },
@@ -11,10 +11,10 @@ const interviewMatrixSchema = new Scehma({
         round : {
             type : Number,
         },
-        Id : {
+        userId : {
             type : String
         }
 
-    }],
+    }]
 
 })

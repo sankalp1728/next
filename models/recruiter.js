@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const recruiterSchema = new Schema({
-    UserID : {
+    userID : {
         type : String, 
         required : true
     },
@@ -16,12 +16,20 @@ const recruiterSchema = new Schema({
 
     skills : [String],
 
-    MrfAssigned : [{
-        MrfID : {
+    mrfAssigned : [{
+        mrfID : {
             type : String
         },
         requirements : {
             type : Number
+        },
+        shorlisted : {
+            type : Number,
+            default : 0
+        },
+        hired : {
+            type : Number,
+            default : 0
         }
     }]
 

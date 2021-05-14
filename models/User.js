@@ -18,10 +18,10 @@ const UserSchema = new Scehma({
         required : true // priveledges - admin, recruiter, vendor, employee, interviewer
     },
 
-    userAccess : {
+    userRole : {
         type : String,
         required : true
-    },      // in case special permission, name = special, is to be reffered for access
+    },       // in case special permission, name = special, is to be reffered for access
 
     hierarchy : {
         type: {
@@ -59,7 +59,7 @@ const UserSchema = new Scehma({
         required : true // encryption bcrypt.js, SHA256
     },
 
-    location : {
+    locationID : {
         type : String,
         required : false
     }

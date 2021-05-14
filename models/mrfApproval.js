@@ -16,7 +16,6 @@ const MRFApprovalSchema = new Schema({
         ID : {
             type : String,
             required : true
-
         },
         Status : {
             type : String,
@@ -24,5 +23,6 @@ const MRFApprovalSchema = new Schema({
         }
 
     }]
-
-})
+},
+{ timestamps: true }
+)

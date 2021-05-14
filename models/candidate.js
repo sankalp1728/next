@@ -91,15 +91,18 @@ const candidateSchema = new Scehma({
     sourcetype : {
         type : String,
         required : false
-        //vendor,referral,HR,Portal
+        //vendor,referral,HR,Portal  use JWT
     },
 
     SourceID : {
         type : String,
         required : false
-    },
+    }, // userID
 
-    BCK
+    BCGagencyID : {
+        type : String,
+        required : false
+    },
 
     employement : {
         total_experience : {
@@ -117,6 +120,12 @@ const candidateSchema = new Scehma({
             required : true
         }
     },
+
+    docsLink : {
+        type : String,
+        default : "",
+        required : false
+    }
 
 })
 

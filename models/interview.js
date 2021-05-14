@@ -2,12 +2,17 @@ const mongoose = require('mongoose')
 const Scehma = mongoose.Schema
 
 const interviewSchema = new Scehma({
-    lineUp_id : {
+    lineUpId : {
         type : String,
         required : true
     },
 
-    interviewer_id : {
+    candidateId : {
+        type : String,
+        required : true
+    },
+
+    interviewerId : {
         type : String,
         required : true
     },
@@ -17,21 +22,6 @@ const interviewSchema = new Scehma({
         required : true
             // group, solo
     },
-
-    candidate_status : [{ // this is for updating the status, availabilbity and the result of the candidate
-
-        candidate_id : {
-            type : String,
-            required : true 
-        },
-        candidate_status : {
-            type : String,
-            required : true,
-
-            
-        }
-    
-    }],
 
     roundNumber : {
         type : Number,
@@ -44,7 +34,7 @@ const interviewSchema = new Scehma({
     },
 
     status : {
-        type : Boolean,
+        type : String,
         requried : false
-    } // pass, fail
+    } // pass, fail, not-appeared
 })

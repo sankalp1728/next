@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 const lineUpSchema = new Schema({
 
-    candidate : [String],
+    candidateID : [String],
     slotStart : Date,
     slotEnd : Date,
-    candidateId : Number,
+    interviewerID : String,
+    roundNumber : Number,
+    meetingLink : String,
     status: ["Pending","Upcoming","Reschedule","Cancel"],
 })
 

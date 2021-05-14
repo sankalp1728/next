@@ -7,19 +7,27 @@ const candidateStatusSchema = new Scehma({
         type : String,
         required : true
     },
-    verified : {
+    screened : {
         type : Boolean,
-        required : true
+        required : true // screening process
     },
-    interview : {
+    interview : [{
         round : {
             type : Number,
-            required : true
         },
         status : {
-            type : Boolean,
-            required : true
+            type : Boolean,            
         },
+        remarks : {
+            type : String,            
+        }
         
+    }],
+
+    bcgVer : {
+        type : String,
+        required : false
     }
+
+    
 })
