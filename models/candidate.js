@@ -60,7 +60,7 @@ const candidateSchema = new Scehma({
     gender : {
         type : String,
         required : true
-    },
+    },  
 
     differentlyAbled  : {
         type : Boolean,
@@ -71,7 +71,7 @@ const candidateSchema = new Scehma({
         type : String,
         required : true
 
-        //10,12,G,PG, etc
+        //10,12,G,PG,anythings else, others etc
     },
     certifications : [{
         type : String,
@@ -118,6 +118,10 @@ const candidateSchema = new Scehma({
         age : {
             type : Number,
             required : true
+        },
+        employementHistoryId : {
+            type : String,
+            required : true
         }
     },
 
@@ -125,6 +129,15 @@ const candidateSchema = new Scehma({
         type : String,
         default : "",
         required : false
+    },
+
+    mrfMismatch : {
+        type : String,
+        default : false
+    },
+    
+    remarks : {
+        type : String
     }
 
 })

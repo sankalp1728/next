@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Scehma = mongoose.Schema
+const emailValidator = require('email-validator')
+
 
 const UserSchema = new Scehma({
     name : {
@@ -20,8 +22,9 @@ const UserSchema = new Scehma({
 
     userRole : {
         type : String,
-        required : true
-    },       // in case special permission, name = special, is to be reffered for access
+        required : true,
+        enum : ['Super-Admin','special','HR', 'Interviewer', 'Vendor', 'BCGVerification', 'Campus', 'Employee', ]
+    },// in case special permission, name = special, is to be reffered for access
 
     hierarchy : {
         type: {
@@ -41,17 +44,28 @@ const UserSchema = new Scehma({
 
     jobType : {
         type : String,
-        required : true
+        required : true,
+        enum : ['Internship','Full-Time','Temporary']        
     },// currently internship, full time , temp
 
     diversity : {
         type : String,
-        required : true // challenged
+        required : true, // challenged
+        enum : ['Physically Challenged', 'Female', 'General']
     },
     
     email : {
         type : String,
-        required : true // can be changed later on , used as username
+        required : true,
+        unique : true,
+        
+        validate(value){
+            if(!emailValidator.validate(value)){
+                throw new Error("the email is invalid")
+            }
+        }
+        // can be changed later on , used as username
+
     },
 
     password : {

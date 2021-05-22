@@ -4,7 +4,7 @@ const passport = require('passport')
 const swaggerJSDocs = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 const hierarchyRouter = require('./routes/hierarchy')
-
+const user = require('./routes/user')
 
 
 const options = {
@@ -31,6 +31,7 @@ const app = express()
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use(express.json())
 app.use(passport.initialize())
+app.use('/',user)
 
 
 

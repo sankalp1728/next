@@ -24,6 +24,15 @@ const candidateStatusSchema = new Scehma({
         
     }],
 
+    offerLetterAcknowlegement:{
+        type : Boolean,
+        required : false
+    },
+    annexureSent : {
+        type: Boolean,
+        required: false
+    },
+
     bcgVer : {
         type : String,
         required : false

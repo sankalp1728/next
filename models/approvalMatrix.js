@@ -7,6 +7,10 @@ const apporvalMatrixSchema = new Scehma({
         type : String,
         Required : true
     },
+    coolingPeriod : {
+        type : Number,
+        required  : true
+    },
     type : {
         type : String,
         required : true,
