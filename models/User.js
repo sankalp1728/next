@@ -17,7 +17,8 @@ const UserSchema = new Scehma({
 
     userType : {
         type : String,
-        required : true // priveledges - admin, recruiter, vendor, employee, interviewer
+        required : true,
+        enum : ['admin', 'recruiter', 'vendor', 'employee', 'interviewer'] // priveledges - admin, recruiter, vendor, employee, interviewer
     },
 
     userRole : {
@@ -71,6 +72,11 @@ const UserSchema = new Scehma({
     password : {
         type : String,
         required : true // encryption bcrypt.js, SHA256
+    },
+
+    mailPassword : {
+        type  : String,
+        required : true
     },
 
     locationID : {
