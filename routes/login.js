@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken')
 const keys = require('../keys')
 var emailValidator = require("email-validator");
-const login = require('../../../Downloads/MERN Stack Front To Back Full Stack React, Redux & Node.js/devcon/validators/login');
+
 
 const app = express.Router()
 
