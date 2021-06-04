@@ -10,6 +10,20 @@ const mailer = require('./mailer')
 
 //email conf
 
+router.post('/super-admin/add',async(req,res)=>{
+    try{   
+        const salt = await bcrypt.genSaltSync(10)
+        const hash = await bcrypt.hashSync(req.body.password,salt)
+        req.body.password = hash;
+        const admin = new User(req.body);
+        await admin.save();
+        console.log("hi")
+        res.send("admin added");
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
+})
 
 
 
@@ -41,22 +55,24 @@ router.post('/employee/add',async(req,res)=>{
         // list of recievers, will be converted to recieverString in mailer.js
 
         const Subject = "Added a new Employee to the database"
-        const text  = "A new employee has been added into the system"
+        const text  = "A new employee has been added into the system "
+        const html = "<body>"
+              html += `<h3> Name : ${employee.modelName.firstName} </h3>`
+              html += "</body>"
+
 
         mailer(user, notifRecievers, Subject, text, html)
-
-        
-        
-        
     }catch(err){
         console.log(err);
         res.status(400).send("err")
     }
 })
 
-
-
 //user trying to fetch his own data, to view his profile
-route.post("user/data")
+
+router.post("/empolyee/update",async(req,res)=>{
+    res.send("something")
+})
+
 
 module.exports = router;

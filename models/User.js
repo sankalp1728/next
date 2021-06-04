@@ -74,7 +74,7 @@ const UserSchema = new Scehma({
         required : true // encryption bcrypt.js, SHA256
     },
 
-    mailPassword : {
+    emailPassword : {
         type  : String,
         required : true
     },
