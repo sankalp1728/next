@@ -39,7 +39,7 @@ app.use('/',login)
 
 
 
-port = 2233||process.env.port
+port = process.env.port || 2233
 
 const url = "mongodb+srv://sankalp1728:Sankalp%231728@cluster0.uqisn.mongodb.net/next?retryWrites=true&w=majority"
 
