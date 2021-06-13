@@ -24,7 +24,7 @@ const UserSchema = new Scehma({
     userRole : {
         type : String,
         required : true,
-        enum : ['Super-Admin','special','HR', 'Interviewer', 'Vendor', 'BCGVerification', 'Campus', 'Employee', ]
+        enum : ['Super-Admin','admin','special','HR', 'Interviewer', 'Vendor', 'BCGVerification', 'Campus', 'Employee', ]
     },// in case special permission, name = special, is to be reffered for access
 
     hierarchy : {
@@ -74,14 +74,14 @@ const UserSchema = new Scehma({
         required : true // encryption bcrypt.js, SHA256
     },
 
-    emailPassword : {
-        type  : String,
-        required : true
-    },
-
-    locationID : {
+    location : {
         type : String,
         required : false
+    },
+
+    branchID : {
+        type : String,
+        required : true
     }
 })
 

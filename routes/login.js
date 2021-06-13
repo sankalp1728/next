@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const User = mongoose.model('User')
+const User = require("../models/User")
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken')
 const keys = require('../keys')
@@ -12,6 +12,7 @@ const app = express.Router()
 app.post("/login",async(req,res)=>{
 
     try{
+        console.log(typeof(req))
         if(!emailValidator.validate(req.body.email)){
             throw new Error("Email Invalid")
         }
@@ -26,14 +27,15 @@ app.post("/login",async(req,res)=>{
         }
 
         const payload = {  
-            email : user._id,
-            user : user.userRole
+            email : user.email,
+            Role : user.userRole
         }
         
         jwt.sign(payload,keys.secret_key,{expiresIn : 3600},(err,token)=>{
             console.log({ token : token })
             res.json({
-                token : 'Bearer ' + token
+                token : 'Bearer ' + token,
+                role : user.userRole
             })
         })   
     }catch(err){

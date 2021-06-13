@@ -125,7 +125,7 @@ const mrfSchema = new Schema({
         required : true,
 
         validate(value){
-            const arr = ["unapp roved","rejected" , "open" , "closed", "overdue"]
+            const arr = ["unapproved","rejected" , "open" , "closed", "overdue"]
         }
     },
 

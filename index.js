@@ -6,6 +6,9 @@ const swaggerUI = require('swagger-ui-express')
 const hierarchyRouter = require('./routes/hierarchy')
 const user = require('./routes/user')
 const login = require('./routes/login')
+const branch = require("./routes/branch")
+const userAccess = require("./routes/userAccess")
+const devAccess = require("./routes/devAccess")
 
 
 const options = {
@@ -31,9 +34,18 @@ const app = express()
 
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use(express.json())
+
+//pasport initialization
 app.use(passport.initialize())
+//passport config
+require("./authentication/Passport")(passport)
+
+
 app.use('/',user)
 app.use('/',login)
+app.use('/',branch)
+app.use('/',userAccess)
+app.use('/',devAccess)
 
 
 
@@ -55,7 +67,7 @@ app.get('/', (req,res)=>{
     }
 })
 
-mongoose.connect(url,{useNewUrlParser : true, useUnifiedTopology: true}).then(()=>{
+mongoose.connect(url,{useNewUrlParser : true, useUnifiedTopology: true,useFindAndModify:false}).then(()=>{
     console.log(`the mongoose server has established the connection`)
 })
 
