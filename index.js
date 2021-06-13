@@ -9,7 +9,7 @@ const login = require('./routes/login')
 const branch = require("./routes/branch")
 const userAccess = require("./routes/userAccess")
 const devAccess = require("./routes/devAccess")
-// const cors = require("cors")
+const cors = require("cors")
 
 
 const options = {
@@ -32,8 +32,8 @@ const swaggerDocs = swaggerJSDocs(options)
 
 
 const app = express()
-// app.use(cors)
 
+app.use(cors)
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use(express.json())
 
