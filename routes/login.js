@@ -13,6 +13,7 @@ app.post("/login",async(req,res)=>{
 
     try{
         console.log(typeof(req))
+        console.log(req)
         if(!emailValidator.validate(req.body.email)){
             throw new Error("Email Invalid")
         }

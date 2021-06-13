@@ -33,7 +33,7 @@ const swaggerDocs = swaggerJSDocs(options)
 
 const app = express()
 
-app.use(cors)
+app.use(cors())
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use(express.json())
 
