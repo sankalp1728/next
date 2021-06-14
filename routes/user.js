@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const SuperAdmin = require("../models/superAdmin")
 const mongoose = require('mongoose')
 const generatePassword = require('../middleware/password_generator')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const mailer = require('./mailer')
 const passport = require('passport')
+const emailValidator = require('email-validator')
 
 
 //email conf
@@ -16,7 +18,7 @@ router.post('/super-admin/add',async(req,res)=>{
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(req.body.password,salt)
         req.body.password = hash;
-        const admin = new User(req.body);
+        const admin = new SuperAdmin(req.body);
         await admin.save();
         console.log("hi")
         res.send("admin added");
