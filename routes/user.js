@@ -21,7 +21,9 @@ router.post('/super-admin/add',async(req,res)=>{
         const admin = new SuperAdmin(req.body);
         await admin.save();
         console.log("hi")
-        res.send("admin added");
+        res.send({
+            success : true
+        });
     }catch(err){
         console.log(err)
         res.json(err)

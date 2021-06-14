@@ -5,6 +5,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken')
 const keys = require('../keys')
 var emailValidator = require("email-validator");
+const SuperAdmin = require("../models/superAdmin")
 
 
 const app = express.Router()
@@ -18,10 +19,13 @@ app.post("/login",async(req,res)=>{
             throw new Error("Email Invalid")
         }
         const user = await User.findOne({email : req.body.email})
-        
-        
         if(!user){
-            throw new Error("Email Not Registered")
+            const user = await SuperAdminModel.findOne({email : req.body.email});
+            if(!user){
+                return res.json({
+                    email : "Invalid"
+                })
+            }
         }
         if(!bcrypt.compareSync(req.body.password, user.password)){
             throw new Error("Password Incorrect")
