@@ -31,7 +31,19 @@ const ProfileSchema =  new mongoose.Schema({
         deleteUserProfile : {
             type : Boolean,
             required : true
-        }
+        },
+        addHeirarchy :  {
+            type : Boolean,
+            required : true
+        },
+        removeHeirarchy : {
+            type : Boolean,
+            required : true
+        },
+        searchHeirarchy : {
+            type : Boolean,
+            required : true
+        },
     }
 })
 

@@ -18,9 +18,9 @@ app.post("/login",async(req,res)=>{
         if(!emailValidator.validate(req.body.email)){
             throw new Error("Email Invalid")
         }
-        const user = await User.findOne({email : req.body.email})
+        var user = await User.findOne({email : req.body.email})
         if(!user){
-            const user = await SuperAdminModel.findOne({email : req.body.email});
+            user = await SuperAdmin.findOne({email : req.body.email});
             if(!user){
                 return res.json({
                     email : "Invalid"

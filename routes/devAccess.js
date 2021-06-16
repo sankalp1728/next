@@ -18,23 +18,30 @@ router.post("dev/userprofile/add",async(req,res)=>{
 /*
 {
     role : "rolename",
-    access :  {
-        name : "accessName",
-        status : true/false
-    }
+    access :  [
+        Name : status
+    ] // just make it an array
 }
 */
 
 
 router.post("/dev/updateaccess",async(req,res)=>{
     try{
-        const userProfile = await UserProfile.findOneAndDelete({role : req.user.role})
-        userProfile.access[req.body.access.name] = access.status;
-        await userProfile.save();
+        // const userProfile = await UserProfile.findOneAndDelete({role : req.user.role})
+        // if(!userProfile){
+        //     throw new Error("UserProfile incorrect")
+        // }
+        const prop = Object.keys(req.body.access);
+        console.log(prop);
+        for(i = 0 ; i<req.body.access.length ; i++){
+            
+        }
+        // await userProfile.save();
+        const userProfile = "profile";
         res.send(userProfile)
     }catch(err){
         console.log(err)
-        res.send(err)
+        res.json(err)
     }
 })
 

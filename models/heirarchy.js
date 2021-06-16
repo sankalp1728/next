@@ -5,7 +5,7 @@ const { validate } = require('./User')
 
 const hierSchema = Schema({
     
-    hier_type : {
+    type : {
         type : String,
         required : true,
 
