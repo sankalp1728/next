@@ -36,7 +36,7 @@ app.post("/login",async(req,res)=>{
             Role : user.userRole
         }
         
-        jwt.sign(payload,keys.secret_key,{expiresIn : 3600},(err,token)=>{
+        jwt.sign(payload,keys.secret_key,{expiresIn : 36000},(err,token)=>{
             console.log({ token : token })
             res.json({
                 token : 'Bearer ' + token,

@@ -27,17 +27,16 @@ router.post("dev/userprofile/add",async(req,res)=>{
 
 router.post("/dev/updateaccess",async(req,res)=>{
     try{
-        // const userProfile = await UserProfile.findOneAndDelete({role : req.user.role})
-        // if(!userProfile){
-        //     throw new Error("UserProfile incorrect")
-        // }
+        var userProfile = await UserProfile.findOne({role : req.body.role}).lean()
+        if(!userProfile){
+            throw new Error("UserProfile incorrect")
+        }
         const prop = Object.keys(req.body.access);
         console.log(prop);
-        for(i = 0 ; i<req.body.access.length ; i++){
-            
-        }
+        userProfile.access = Object.assign(userProfile.access,req.body.access)
+        console.log(userProfile)
         // await userProfile.save();
-        const userProfile = "profile";
+        // const userProfile = "profile";
         res.send(userProfile)
     }catch(err){
         console.log(err)

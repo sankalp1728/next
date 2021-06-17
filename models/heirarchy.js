@@ -10,7 +10,7 @@ const hierSchema = Schema({
         required : true,
 
         validate(value){
-            if(value != "Department" && value != "Sub-Dep" && value != "Team"){
+            if(value != "Department" && value != "Sub-Department" && value != "Team"){
                 throw new Error("The type selected is incorrect")
             }
         }
@@ -22,7 +22,7 @@ const hierSchema = Schema({
     },
     parent : {
         type : String,
-        required : true,
+        default : null,
     }
         // management in case of department entry
         // sub dep : dep name

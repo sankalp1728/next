@@ -3,6 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const hierarchy = require('../models/heirarchy')
 const passport  = require('../authentication/Passport')
+const Access_Check = require('../middleware/Access_check')
 
 
 
@@ -50,14 +51,15 @@ router.post("/hierarchy/remove", async(req,res) => {
         }
 
         if(req.body.type === "Department"){
-            const data = await hierarchy.find({parent : entity.name})
+            var data = await hierarchy.find({parent : entity.name})
             for(i=0 ; i<data.length ; i++){
                 const child = await hierarchy.deleteMany({parent : data.name})
             }
+            data = await hierarchy.deleteMany({parent : entity.name})
         }
 
         if(req.body.type === "Sub-Dep"){
-            const data = await hierarchy.delete({parent : entity.name})
+            const data = await hierarchy.deleteMany({parent : entity.name})
         }
 
         await hierarchy.deleteOne({name : entity.name})
