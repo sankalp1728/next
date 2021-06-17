@@ -29,11 +29,12 @@ router.post('/hierarchy/add',async(req,res) => {
     }
 })
 
-router.post("/heirarchy/search", async(req,res)=>{
+router.post("/hierarchy/search", async(req,res)=>{
     try{
         const search = req.body;
-        const data = hierarchy.find(req.body)
+        const data = await hierarchy.find(req.body)
         console.log(data);
+        res.send(data);
     }catch(err){
         console.log(err)
         res.send(err)
