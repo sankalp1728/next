@@ -54,7 +54,8 @@ router.post("/hierarchy/remove", async(req,res) => {
         if(req.body.type === "Department"){
             var data = await hierarchy.find({parent : entity.name})
             for(i=0 ; i<data.length ; i++){
-                const child = await hierarchy.deleteMany({parent : data.name})
+                console.log(data[i].name)
+                const child = await hierarchy.deleteMany({parent : data[i].name})
             }
             data = await hierarchy.deleteMany({parent : entity.name})
         }

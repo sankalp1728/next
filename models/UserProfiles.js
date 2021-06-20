@@ -20,6 +20,11 @@ const ProfileSchema =  new mongoose.Schema({
             type : Boolean,
             required : true
         },
+        showBranch : {
+            type : Boolean,
+            required : true
+        },
+        
         addUserProfile : {
             type : Boolean,
             requried : true
