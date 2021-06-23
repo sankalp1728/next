@@ -30,35 +30,40 @@ router.post('/super-admin/add',async(req,res)=>{
     }
 })
 
+router.post('/mail/testing',passport.authenticate("jwt",{session : false}),async(req,res) => {
+    try{
+        // const user = User.findOne({name : })
 
 
 
-router.post('/employee/add',passport.authenticate("jwt",{session : false}),async(req,res)=>{
+    }catch(err){
+
+    }
+})
+
+
+router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
         const password = await generatePassword()
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(password,salt)
         req.body.password = hash
         const employee = new User(req.body)
-        const user = await User.findOne({email : req.user.email}).select("emailPassword")
         
         var notifRecievers = await User.find({
-            locationID : employee.locationID,
-            userType : "admin"
-        }).select('email')
-        console.log(notifRecievers)
-        await employee.save()
+            locationID : employee.branchID,
+            userType : "admin" || userType 
+        }).select('email').lean()
 
-        // mail to the employee ID and all admin IDs of the same location
-        const sender = {
-            email : req.user.email,
-            password :  user.emailPassword
-        } // sender here is the user in the mailer function
-        
-        
+        notifRecievers.push({
+            email : employee.email
+        })// notifrecievers => receiverString
+        console.log(notifRecievers)
         notifRecievers.push({
             email : employee.email
         })
+        await employee.save()
+        
 
         console.log(password)
         // list of recievers, will be converted to recieverString in mailer.js
@@ -67,22 +72,21 @@ router.post('/employee/add',passport.authenticate("jwt",{session : false}),async
         const text  = "A new employee has been added into the system, the email " + employee.email + "password of the user is " + password
         const html = undefined;
         res.send(password)
-        // mailer(sender, notifRecievers, Subject, text, html)
+        mailer(notifRecievers, Subject, text, html)
     }catch(err){
         console.log(err);
         res.status(400).send(err)
     }
 })
 
-router.post("/employee/search",passport.authenticate("jwt",{session : false}),async(req,res) =>{
+router.post("/user/search",passport.authenticate("jwt",{session : false}),async(req,res) =>{
     res.json(req.user)
 })
 //user trying to fetch his own data, to view his profile
 
-router.post("/employee/changepassword",passport.authenticate("jwt",{session : false}) , async(req,res)=>{
+router.post("/user/changepassword",passport.authenticate("jwt",{session : false}) , async(req,res)=>{
     
     try{
-        
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(req.body.password,salt)
         const user = await User.findOneAndUpdate({email : req.user.email}, {password : hash})

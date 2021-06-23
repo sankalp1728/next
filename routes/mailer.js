@@ -3,20 +3,20 @@ const express = require('express')
 
 
 //here the user is an object that contains the user:mail, user:password, recievers Array, Subject, Text, HTML
-const mailer = (user, recievers, subject, text, html) =>{
+const mailer = (recievers, subject, text, html) =>{
 
-    var recieverString = recievers[0];
+    var recieverString = ""
     for(i = 0 ; i<recievers.length ; i++){
-        recieverString += ', ' + recievers[i].email;
+        recieverString += recievers[i].email + ', ';
     }
-    console.log(user.email, user.password)
+
     var transporter = nodemailer.createTransport({
         host: "smtp.zoho.com",
         port: 587,
         secure : false,
         auth: {
-          user: user.email,
-          pass: user.password
+          user: "Sankalp@geekatweb.com",
+          pass: "Sankalp#1728"
         }
       });
 
