@@ -49,6 +49,20 @@ const ProfileSchema =  new mongoose.Schema({
             type : Boolean,
             required : true
         },
+        searchUserProfile : {
+            type : Boolean,
+            required : true
+        },
+        addUserProfile : {
+            type : Boolean,
+            required : true
+        },
+        searchUser : {
+            type : Boolean,
+            required : true
+        }
+
+
     }
 })
 

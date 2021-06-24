@@ -30,16 +30,6 @@ router.post('/super-admin/add',async(req,res)=>{
     }
 })
 
-router.post('/mail/testing',passport.authenticate("jwt",{session : false}),async(req,res) => {
-    try{
-        // const user = User.findOne({name : })
-
-
-
-    }catch(err){
-
-    }
-})
 
 
 router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req,res)=>{
@@ -71,8 +61,8 @@ router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req
         const Subject = "Added a new Employee to the database"
         const text  = "A new employee has been added into the system, the email " + employee.email + "password of the user is " + password
         const html = undefined;
+        mailer(req.user,notifRecievers, Subject, text, html)
         res.send(password)
-        mailer(notifRecievers, Subject, text, html)
     }catch(err){
         console.log(err);
         res.status(400).send(err)
@@ -84,13 +74,19 @@ router.post("/user/search",passport.authenticate("jwt",{session : false}),async(
 })
 //user trying to fetch his own data, to view his profile
 
-router.post("/user/changepassword",passport.authenticate("jwt",{session : false}) , async(req,res)=>{
+router.post("/user/forgotpassword",async(req,res)=>{
     
     try{
+        const password = await generatePassword()
         const salt = await bcrypt.genSaltSync(10)
-        const hash = await bcrypt.hashSync(req.body.password,salt)
-        const user = await User.findOneAndUpdate({email : req.user.email}, {password : hash})
-        await user.save()
+        const hash = await bcrypt.hashSync(password,salt)
+        const user = await User.findOneAndUpdate({email : req.body.email}, {password : hash})
+        const Subject = "Forgot Password"
+        const text  = "A new password has been generated for your account, please login and change your password. Your new and current password is :- " + password + " ."
+        const html = undefined;
+        const notifRecievers = [];
+        notifRecievers.push({email : req.body.email})
+        mailer(req.body,notifRecievers,Subject,text,html)
         res.send("saved")
     }catch(err){
         console.log(err)

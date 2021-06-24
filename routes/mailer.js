@@ -3,7 +3,7 @@ const express = require('express')
 
 
 //here the user is an object that contains the user:mail, user:password, recievers Array, Subject, Text, HTML
-const mailer = (recievers, subject, text, html) =>{
+const mailer = (user,recievers, subject, text, html) =>{
 
     var recieverString = ""
     for(i = 0 ; i<recievers.length ; i++){
@@ -15,18 +15,20 @@ const mailer = (recievers, subject, text, html) =>{
         port: 587,
         secure : false,
         auth: {
-          user: "Sankalp@geekatweb.com",
-          pass: "Sankalp#1728"
+          user: "rishabh@geeksatweb.com",
+          pass: "Rip1996@"
         }
       });
 
     let mailOption = {
-        from: user.mail,
+        from: "rishabh@geeksatweb.com",
         to: recieverString,
         subject : subject,
         text : text,
         html : html
     };
+
+    
 
     transporter.sendMail(mailOption,function(err,data){                     //mobile notification also required
         if(err){

@@ -7,27 +7,33 @@ const apporvalMatrixSchema = new Scehma({
         type : String,
         Required : true
     },
+    
+    hierarchy : {
+        type : {
+            type : String,
+            required : true
+        },
+        name : {
+            type : String,
+            required : true
+        }
+    },
+
     coolingPeriod : {
         type : Number,
         required  : true
-    },
-    type : {
-        type : String,
-        required : true,
-    },
-    parent : {
-        type : String,
-        required : true
     },
     verified : {
         type : Boolean,
         Required : true
     },
     TAT : {
-        type : Date,
+        type : Number,
         required : true
     },
     approvers : [{type : String}]
 })
+
+const approvalMatrixModel = mongoose.model("approvalMatrix",apporvalMatrixSchema)
 
 // approver TAT redifining >> << Time pe notification, system, email

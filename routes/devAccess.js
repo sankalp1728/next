@@ -27,7 +27,7 @@ router.post("dev/userprofile/add",async(req,res)=>{
 
 router.post("/dev/updateaccess",async(req,res)=>{
     try{
-        var userProfile = await UserProfile.findOne({role : req.body.role}).lean()
+        var userProfile = await UserProfile.findOneAndDelete({role : req.body.role}).lean()
         if(!userProfile){
             throw new Error("UserProfile incorrect")
         }
@@ -35,7 +35,8 @@ router.post("/dev/updateaccess",async(req,res)=>{
         console.log(prop);
         userProfile.access = Object.assign(userProfile.access,req.body.access)
         console.log(userProfile)
-        // await userProfile.save();
+        userProfile = new UserProfile(userProfile)
+        await userProfile.save();
         // const userProfile = "profile";
         res.send(userProfile)
     }catch(err){

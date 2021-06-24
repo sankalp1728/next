@@ -20,12 +20,12 @@ router.post("/branch/add",passport.authenticate("jwt",{session : false}),async(r
 })
 
 
-router.post("/branch/search",passport.authenticate("jwt",{session : false}),async(req,res)=>{
+router.get("/branch",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
         if(!await helper.Access_Check(req.user,"searchBranch")){
             throw new Error("Insufficient Access")
         }
-        const branch = await Branch.find(req.body)
+        const branch = await Branch.find(req.query)
         res.send(branch)
     }catch(err){
         console.logg(err);
