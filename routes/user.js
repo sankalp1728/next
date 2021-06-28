@@ -40,6 +40,7 @@ router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req
         req.body.password = hash
         const employee = new User(req.body)
         
+        
         var notifRecievers = await User.find({
             locationID : employee.branchID,
             userType : "admin" || userType 

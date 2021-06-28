@@ -156,7 +156,7 @@ const mrfSchema = new Schema({
     remarks : {
         type : String,
         required : true
-    }
+    } // 
     
 })
 

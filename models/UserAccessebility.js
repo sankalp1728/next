@@ -31,7 +31,7 @@ const AccessSchema =  new mongoose.Schema({
         deleteUserProfile : {
             type : Boolean,
             required : true
-        }
+        },
     }
 })
 

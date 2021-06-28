@@ -60,6 +60,22 @@ const ProfileSchema =  new mongoose.Schema({
         searchUser : {
             type : Boolean,
             required : true
+        },
+        addApprovalMatrix : {
+            type : Boolean,
+            required : true
+        },
+        deleteApprovalMatrix : {
+            type : Boolean,
+            required : true
+        },
+        updateApprovalMatrix : {
+            type : Boolean,
+            required : true
+        },
+        requestApprovalMatrix : {
+            type : Boolean,
+            required : true
         }
 
 
