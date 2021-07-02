@@ -4,6 +4,7 @@ const passport = require("passport")
 const helper = require("../middleware/Access_check")
 const ApprovalMatrix = require("../models/approvalMatrix")
 const Hierarchy = require("../models/heirarchy")
+const Branch = require("../models/branch")
 const User = require("../models/User")
 const router = express.Router()
 
@@ -15,9 +16,21 @@ router.get("/approvalmatrix",passport.authenticate("jwt",{session : false}),asyn
             })
         }
 
-        const approvalMatrix = ApprovalMatrix.find();
+        const approvalMatrix = await ApprovalMatrix.find().lean();
+        for(i = 0 ; i< approvalMatrix.length ; i++){
+            element = approvalMatrix[i];
+            element.hierarchyID = await Hierarchy.findById(element.hierarchyID);
+            element.branchID = await Branch.findById(element.branchID);
+            console.log(element.approversID) 
+            for(j = 0 ; j < element.approversID.length ; j++){
+                element2 = element.approversID[j];
+                console.log(element2)
+                element2._id = await User.findById(element2).select('_id name email')
+            }
+        }
+
+        // console.log(approvalMatrix)
         res.send(approvalMatrix)
-        
     }catch(err){
         console.log(err)
         res.send(err)
