@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const MRFApprovalSchema = new Schema({
-    mrfID : {
+    mrfRequestID : {
         type : String,
         required : true
     },
@@ -12,12 +12,12 @@ const MRFApprovalSchema = new Schema({
         type : Number,
         required : true
     },
-    Apporvers : [{
-        ID : {
+    Approvers : [{
+        _id : {
             type : String,
             required : true
         },
-        Status : {
+        status : {
             type : String,
             required : true
         }

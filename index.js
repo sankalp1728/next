@@ -10,6 +10,7 @@ const branch = require("./routes/branch")
 const userAccess = require("./routes/userAccess")
 const devAccess = require("./routes/devAccess")
 const approvalMatrix = require("./routes/approvalMatrix")
+const mrfRequest = require("./routes/mrfRequest")
 const cors = require("cors")
 
 
@@ -50,6 +51,7 @@ app.use('/',branch)
 app.use('/',userAccess)
 app.use('/',devAccess)
 app.use('/',approvalMatrix)
+app.use('/',mrfRequest)
 
 
 

@@ -6,12 +6,30 @@ const mongoose = require('mongoose')
 const generatePassword = require('../middleware/password_generator')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
+const helper = require("../middleware/Access_check")
 const mailer = require('./mailer')
 const passport = require('passport')
 const emailValidator = require('email-validator')
 
 
-//email conf
+
+
+router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res) =>{
+    try{
+        if(! await helper.Access_Check(req.user,"searchUser")){
+            res.status(401).send({
+                Access : "Insufficient"
+            })
+        }
+        const users = await User.find().lean();
+        res.send(users);
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
+})
+
+
 
 router.post('/super-admin/add',async(req,res)=>{
     try{   
@@ -32,7 +50,7 @@ router.post('/super-admin/add',async(req,res)=>{
 
 
 
-router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req,res)=>{
+router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
         const password = await generatePassword()
         const salt = await bcrypt.genSaltSync(10)
@@ -70,12 +88,9 @@ router.post('/user/add',passport.authenticate("jwt",{session : false}),async(req
     }
 })
 
-router.post("/user/search",passport.authenticate("jwt",{session : false}),async(req,res) =>{
-    res.json(req.user)
-})
 //user trying to fetch his own data, to view his profile
 
-router.post("/user/forgotpassword",async(req,res)=>{
+router.patch("/user/forgotpassword",async(req,res)=>{
     
     try{
         const password = await generatePassword()

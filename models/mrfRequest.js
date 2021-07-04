@@ -1,19 +1,21 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const mrfSchema = new Schema({
+const mrfRequestSchema = new Schema({
     designation : {
         positionID : {
             type : String,
             required : true
         },
 
-        position_type : {
+        positionType : {
             type : String,
-            required : true
+            required : true,
+            enum : ['replacement','new']
         }, // replacement/new
 
-        replacement_id : {
+
+        replacementID : {
             type : String,
             required : false
         }, // approval matrix diff for new and replacement positions, defined by the client
@@ -30,22 +32,27 @@ const mrfSchema = new Schema({
         type : String, 
     }],
 
-    reporting_manager : {
+    reportingManager : {
         type : String,
         required : true
     }, // the one who created the mrf
 
-    department_head : {
+    departmentHead : {
         type : String,
-        required : true
+        required : false
     },  // any user with hierarchy department, from the department of the mrf creator
     // NOT FRONT-END
 
-    sub_dep_head : {
+    subDepHead : {
         type : String,
-        required : true
+        required : false
     }, // any user with gierarchy sub-department, from the sub department of the mrf creator
     // NOT FRONT-END
+    branchID : {
+        type : String,
+        required : true
+    },
+
     location : {
         type : String,
         required : true
@@ -58,21 +65,21 @@ const mrfSchema = new Schema({
 
     jd_attachment : {
         type : String,
-        required : true
+        required : false
     },
     
     specification : {
         age : {
             type : Number,
-            required : false
+            required : true
         },
-        rel_exp : {
+        relExp : {
             type : Number,
-            required : False
+            required : true
         },
-        total_exp : {
+        totalExp : {
             type : Number,
-            required : False
+            required : true
         },
         education : {
             type : String,
@@ -80,28 +87,35 @@ const mrfSchema = new Schema({
         }
     },
 
+    gender : {
+        type : String,
+        required : true,
+        enum : ['Male','Female','Others']
+    },
+
     diversity : {
         type : String,
-        required : false
+        required : true,
+        enum : ['Physically Challenged', 'Visually Challenged','General']
     },
 
     //females, physically/visuall handicaped
 
-    start_date : {
+    startDate : {
         type : Date,
         required : true
     }, // approval date
 
     //company will define TAT(unique for each mrf)
     //company will decide  TAT or end date
-    end_date : {
+    endDate : {
         type : Date,
         required : true
     }, // end date bulk mrf changes, and TAT separate
 
 
 
-    job_type : {
+    jobType : {
         type : String, 
         required : true,
         enum : ["Part-Time", "Permanent", "Internship"]
@@ -110,18 +124,18 @@ const mrfSchema = new Schema({
     status : {
         type : String,
         required : true,
-
-        validate(value){
-            const arr = ["unapproved","rejected" , "open" , "closed", "overdue"]
-        }
+        enum : ["unapproved","rejected" , "open" , "closed", "overdue"]
     },
 
     remarks : {
         type : String,
-        required : true
+        required : false
     } // 
     
 })
+
+const mrfRequestModel = mongoose.model("mrfRequest", mrfRequestSchema)
+module.exports = mrfRequestModel
 
 // every mrf will be shared with each HR recruiters
 // HR task assignment 1. manually 2. Automated 2.1. odd even 2.2. department-vise 2.3. skill-based

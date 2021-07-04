@@ -49,12 +49,25 @@ router.post("/approvalmatrix",passport.authenticate("jwt", {session : false}),as
         if(!hierarchy){
             throw new Error("The hierarchy_id is incorrect")
         }
+
+        // check duplicated
+
         const approval = new ApprovalMatrix(req.body)
+        if(approval.approversID.length === new set(approval.approversID).size){
+            res.status(401).send("there are duplicates in approvers")
+        }
+
+        //  check if the user are legit 
+
         for(i = 0 ; i<approval.approversID.length ; i++){
             if(!await User.findById(approval.approversID[i]._id)){
                 return res.status(400).send("The ID on index " + i + " does not exist in the Database")
             }
         }
+
+
+
+        
         await approval.save()
         res.send(approval)
     }catch(err){

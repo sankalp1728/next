@@ -7,7 +7,7 @@ const Access_Check = require('../middleware/Access_check')
 
 
 
-router.post('/hierarchy/add',async(req,res) => {
+router.post('/hierarchy',async(req,res) => {
     try{
 
         // if(req.user.userType !== "admin"){
@@ -29,7 +29,7 @@ router.post('/hierarchy/add',async(req,res) => {
     }
 })
 
-router.post("/hierarchy/search", async(req,res)=>{
+router.get("/hierarchy", async(req,res)=>{
     try{
         const search = req.body;
         const data = await hierarchy.find(req.body)
@@ -41,7 +41,7 @@ router.post("/hierarchy/search", async(req,res)=>{
     }
 })
 
-router.post("/hierarchy/remove", async(req,res) => {
+router.delete("/hierarchy", async(req,res) => {
     try{
         // type, name
         const entity = await hierarchy.findOne({name : req.body.name})

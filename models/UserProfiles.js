@@ -76,7 +76,23 @@ const ProfileSchema =  new mongoose.Schema({
         requestApprovalMatrix : {
             type : Boolean,
             required : true
-        }
+        },
+        addMrfRequest : {
+            type : Boolean,
+            required : true
+        },
+        deleteMrfRequest : {
+            type : Boolean,
+            required : true
+        },
+        editMrfRequest : {
+            type : Boolean,
+            required : true
+        },
+        showMrfRequest : {
+            type : Boolean,
+            required : true
+        },
 
 
     }
