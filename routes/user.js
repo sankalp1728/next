@@ -71,6 +71,19 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
     }
 })
 
+router.delete("/user",passport.authenticate("jwt",{session : false}),async(req,res)=>{
+    try{
+        const user = await User.findById(req.body._id)
+        console.log(user)
+        res.send({
+            Success : true
+        })
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
+})
+
 
 // forgot password
 
