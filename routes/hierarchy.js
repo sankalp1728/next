@@ -60,7 +60,7 @@ router.delete("/hierarchy", async(req,res) => {
             data = await hierarchy.deleteMany({parent : entity.name})
         }
 
-        if(req.body.type === "Sub-Dep"){
+        if(req.body.type === "Sub-Department"){
             const data = await hierarchy.deleteMany({parent : entity.name})
         }
 

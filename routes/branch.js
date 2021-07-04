@@ -5,7 +5,7 @@ const helper = require("../middleware/Access_check")
 const passport = require('passport')
 const router = express.Router()
 
-router.post("/branch/add",passport.authenticate("jwt",{session : false}),async(req,res)=>{
+router.post("/branch",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
         if(!await helper.Access_Check(req.user,"addBranch")){
             throw new Error("Insufficient Access")
@@ -35,7 +35,7 @@ router.get("/branch",passport.authenticate("jwt",{session : false}),async(req,re
 
 
 
-router.post("/branch/remove",passport.authenticate("jwt",{session : false}),async(req,res)=>{
+router.delete("/branch",passport.authenticate("jwt",{session : false}),async(req,res)=>{
    try{
        if(!await helper.Access_Check(req.user,"removeBranch")){
            throw new Error("Insufficient Access")

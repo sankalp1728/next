@@ -6,7 +6,7 @@ const Branch = require("../models/branch")
 const ApprovalMatrix = require("../models/approvalMatrix")
 const User = require("../models/User")
 const helper = require("../middleware/Access_check")
-
+const MrfApproval = require("../models/mrfApproval")
 const router = express.Router()
 
 
@@ -77,9 +77,9 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
 
         // initialize mrfApproval document
 
-        const mrfApproval = {
+        var mrfApproval = {
             mrfRequestID : mrfRequest._id,
-            TAT : approval.tat,
+            tat : approval.tat,
             Approvers : []
         }
         
@@ -131,6 +131,9 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
                 status : false
             })
         }
+
+        mrfApproval = new MrfApproval(mrfApproval)
+        await mrfApproval.save()
         console.log(mrfApproval)
         res.send(mrfApproval)
 

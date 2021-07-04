@@ -8,7 +8,7 @@ const MRFApprovalSchema = new Schema({
         type : String,
         required : true
     },
-    TAT : {
+    tat : {
         type : Number,
         required : true
     },
@@ -26,3 +26,6 @@ const MRFApprovalSchema = new Schema({
 },
 { timestamps: true }
 )
+
+const mrfApprovalModel = mongoose.model("mrfApproval",MRFApprovalSchema)
+module.exports = mrfApprovalModel
