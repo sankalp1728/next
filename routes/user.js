@@ -12,7 +12,7 @@ const passport = require('passport')
 const emailValidator = require('email-validator')
 
 
-
+// get all users
 
 router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res) =>{
     try{
@@ -30,24 +30,7 @@ router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res)
 })
 
 
-
-router.post('/super-admin/add',async(req,res)=>{
-    try{   
-        const salt = await bcrypt.genSaltSync(10)
-        const hash = await bcrypt.hashSync(req.body.password,salt)
-        req.body.password = hash;
-        const admin = new SuperAdmin(req.body);
-        await admin.save();
-        console.log("hi")
-        res.send({
-            success : true
-        });
-    }catch(err){
-        console.log(err)
-        res.json(err)
-    }
-})
-
+// add user
 
 
 router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res)=>{
@@ -88,7 +71,8 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
     }
 })
 
-//user trying to fetch his own data, to view his profile
+
+// forgot password
 
 router.patch("/user/forgotpassword",async(req,res)=>{
     
@@ -109,6 +93,33 @@ router.patch("/user/forgotpassword",async(req,res)=>{
         res.send(err)    
     }
 })
+
+
+// add super-admin
+
+router.post('/super-admin/add',async(req,res)=>{
+    try{   
+        const salt = await bcrypt.genSaltSync(10)
+        const hash = await bcrypt.hashSync(req.body.password,salt)
+        req.body.password = hash;
+        const admin = new SuperAdmin(req.body);
+        await admin.save();
+        console.log("hi")
+        res.send({
+            success : true
+        });
+    }catch(err){
+        console.log(err)
+        res.json(err)
+    }
+})
+
+
+
+
+//user trying to fetch his own data, to view his profile
+
+
 
 module.exports = router
 

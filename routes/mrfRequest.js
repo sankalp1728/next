@@ -8,6 +8,7 @@ const User = require("../models/User")
 const helper = require("../middleware/Access_check")
 const MrfApproval = require("../models/mrfApproval")
 const router = express.Router()
+const Approval = require("../models/approval")
 
 
 
@@ -135,7 +136,19 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
         mrfApproval = new MrfApproval(mrfApproval)
         await mrfApproval.save()
 
-        // generate an approval  and check 
+        // generate an approval and check for every user that is present in the approval matrix
+        var approv = {
+            type : "Approval Matrix",
+            status : "None"
+        }
+
+        if(approverIndex == -1){
+            approval.userId = approval.approversID[0]._id
+        }else if(approverIndex < approval.approversID.length){
+            
+        }
+
+        
 
         console.log(mrfApproval)
         res.send(mrfApproval)

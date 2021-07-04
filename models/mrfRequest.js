@@ -87,16 +87,10 @@ const mrfRequestSchema = new Schema({
         }
     },
 
-    gender : {
-        type : String,
-        required : true,
-        enum : ['Male','Female','Others']
-    },
-
     diversity : {
         type : String,
         required : true,
-        enum : ['Physically Challenged', 'Visually Challenged','General']
+        enum : ['Physically Challenged', 'Visually Challenged','Women','General']
     },
 
     //females, physically/visuall handicaped

@@ -8,18 +8,20 @@ var approvalSchema = new mongoose.Schema({
     },
     type : {
         type : String,
-        required : true      //apporvalMatrix, candidate-mrf Mismatch approval, Bussiness, BCG, interview
+        required : true,
+        enum : ['Approval Matrix']     //apporvalMatrix, candidate-mrf Mismatch approval, Bussiness, BCG, interview
     },
     status : {
-        type : Boolean,
-        required : true
+        type : String,
+        required : true,
+        enum : ["None","Accept","Reject"]
     },
     remarks : {
         type : String,
-        required : true
+        required : false
     }
 
 });
 
 //Export the model
-module.exports = mongoose.model('User', approvalSchema);
+module.exports = mongoose.model('Approvals', approvalSchema);
