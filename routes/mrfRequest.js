@@ -134,6 +134,9 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
 
         mrfApproval = new MrfApproval(mrfApproval)
         await mrfApproval.save()
+
+        // generate an approval  and check 
+
         console.log(mrfApproval)
         res.send(mrfApproval)
 

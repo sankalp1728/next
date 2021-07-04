@@ -9,7 +9,6 @@ const router = express.Router()
 
 router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
-        const approval
     }catch(err){
         console.log(err)
         res.send(err)

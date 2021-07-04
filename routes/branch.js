@@ -42,7 +42,9 @@ router.delete("/branch",passport.authenticate("jwt",{session : false}),async(req
        }
 
        const branch = await Branch.findOneAndDelete(req.body)
-       res.send(branch)
+       res.send({
+           Success : true
+       })
    }catch(err){
        console.log(err)
        res.send(err)
