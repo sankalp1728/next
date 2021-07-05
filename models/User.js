@@ -27,15 +27,9 @@ const UserSchema = new Scehma({
         enum : ['Super-Admin','admin','special','HR', 'Interviewer', 'Vendor', 'BCGVerification', 'Campus', 'Employee', ]
     },// in case special permission, name = special, is to be reffered for access
 
-    hierarchy : {
-        type: {
-            type :String,
-            required : true
-        },
-        name : {
-            type : String,
-            required : true
-        }
+    hierarchyID : {
+        type : String,
+        required : true
     },
 
     designation : {
@@ -49,6 +43,12 @@ const UserSchema = new Scehma({
         enum : ['Internship','Full-Time','Temporary']        
     },// currently internship, full time , temp
 
+    gender : {
+        type : String,
+        required : true,
+        enum : ['Male','Female','Others']
+    },
+    
     diversity : {
         type : String,
         required : true, // challenged

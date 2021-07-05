@@ -8,7 +8,7 @@ const AccessSchema =  new mongoose.Schema({
     },
 
     access : {
-        addEmployee : {
+        addUser : {
             type : Boolean,
             required : true
         },

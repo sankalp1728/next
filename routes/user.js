@@ -1,16 +1,20 @@
 const express = require('express')
-const router = express.Router()
-const User = require('../models/User')
-const SuperAdmin = require("../models/superAdmin")
-const mongoose = require('mongoose')
-const generatePassword = require('../middleware/password_generator')
-const bcrypt = require('bcryptjs')
-const nodemailer = require('nodemailer')
-const helper = require("../middleware/Access_check")
-const mailer = require('./mailer')
 const passport = require('passport')
 const emailValidator = require('email-validator')
+const nodemailer = require('nodemailer')
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const mailer = require('./mailer')
 
+const router = express.Router()
+
+const helper = require("../middleware/Access_check")
+const generatePassword = require('../middleware/password_generator')
+
+const SuperAdmin = require("../models/superAdmin")
+const User = require('../models/User')
+const Branch = require("../models/branch")
+const Hierarchy = require("../models/heirarchy")
 
 // get all users
 
@@ -35,12 +39,24 @@ router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res)
 
 router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
+        if(!await helper.Access_Check(req.user,"addUser")){
+            return res.status(401).json({
+                Access : "Insufficient"
+            })
+        }
         const password = await generatePassword()
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(password,salt)
         req.body.password = hash
         const employee = new User(req.body)
+
+        if(!await Hierarchy.findById(req.body.hierarchyID)){
+            res.status(401).send("The hierarchyID is invalid")
+        }
         
+        if(!await Branch.findById(req.body.branchID)){
+            res.status(401).send("The branchID is invalid")
+        }
         
         var notifRecievers = await User.find({
             locationID : employee.branchID,
@@ -71,8 +87,16 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
     }
 })
 
+// delete User
+
+
 router.delete("/user",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
+        if(!await helper.Access_Check(req.user,"deleteUser")){
+            return res.status(401).json({
+                Access : "Insufficient"
+            })
+        }
         const user = await User.findById(req.body._id)
         console.log(user)
         res.send({
@@ -83,6 +107,50 @@ router.delete("/user",passport.authenticate("jwt",{session : false}),async(req,r
         res.send(err)
     }
 })
+
+// edit User
+
+router.patch("/user",passport.authenticate("jwt",{session: false}),async(req,res)=>{
+    try{
+        if(!await helper.Access_Check(req.user,"editUser")){
+            return res.status(401).json({
+                Access : "Insufficient"
+            })
+        }
+
+        if(!await Hierarchy.findById(req.body.hierarchyID)){
+            res.status(401).send("The hierarchyID is invalid")
+        }
+        
+        if(!await Branch.findById(req.body.branchID)){
+            res.status(401).send("The branchID is invalid")
+        }
+
+        const user = User.findByIdAndUpdate(req.body._id,req.body)
+
+        res.send({
+            Success : true
+        })
+        
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // forgot password

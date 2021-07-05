@@ -41,11 +41,11 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
 
 router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req,res)=>{
     try{
-        if(!await helper.Access_Check(req.user,"addMrf")){
-            return res.status(401).json({
-                Access : "Insufficient"
-            })
-        }
+            if(!await helper.Access_Check(req.user,"addMrf")){
+                return res.status(401).json({
+                    Access : "Insufficient"
+                })
+            }
 
         // check if reporting manager ID invalid
 
@@ -105,8 +105,8 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
                     status : true
                 })
             }
-            // from approverIndex to finish
-            for(i = approverIndex ; i<=approval.approversID.length ; i++){
+            // from approverIndex+1 to finish
+            for(i = approverIndex+1 ; i<=approval.approversID.length ; i++){
                 mrfApproval.Approvers.push({
                     _id : approval.approversID[i]._id,
                     status : false
@@ -142,11 +142,17 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
             status : "None"
         }
 
-        if(approverIndex == -1){
-            approval.userId = approval.approversID[0]._id
-        }else if(approverIndex < approval.approversID.length){
-            
+        if(approverIndex === -1){
+            console.log(approval.approversID[approverIndex+1])
+
+            approv.userId = approval.approversID[0]._id
+        }else if((approverIndex+1) < (approval.approversID.length)){
+            console.log(approval.approversID[approverIndex+1])
+            approv.userId = approval.approversID[approverIndex+1]
         }
+
+        approv = new Approval(approv)
+        await approv.save()
 
         
 

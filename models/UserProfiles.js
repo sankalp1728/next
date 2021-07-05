@@ -8,7 +8,19 @@ const ProfileSchema =  new mongoose.Schema({
     }, // name of role
 
     access : {
-        addEmployee : {
+        addUser : {
+            type : Boolean,
+            required : true
+        },
+        searchUser : {
+            type : Boolean,
+            required : true
+        },
+        deleteUser : {
+            type : Boolean,
+            required : true
+        },
+        editUser : {
             type : Boolean,
             required : true
         },
@@ -57,10 +69,7 @@ const ProfileSchema =  new mongoose.Schema({
             type : Boolean,
             required : true
         },
-        searchUser : {
-            type : Boolean,
-            required : true
-        },
+        
         addApprovalMatrix : {
             type : Boolean,
             required : true
