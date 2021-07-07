@@ -102,6 +102,14 @@ const ProfileSchema =  new mongoose.Schema({
             type : Boolean,
             required : true
         },
+        showApproval : {
+            type : Boolean,
+            required : true
+        },
+        giveApproval : {
+            type : Boolean,
+            requried : true
+        }
 
 
     }

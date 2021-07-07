@@ -25,7 +25,11 @@ router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res)
                 Access : "Insufficient"
             })
         }
-        const users = await User.find().lean();
+        var users = await User.find().lean();
+        for(i = 0 ; i< users.length; i++){
+            users[i].branchID = await Branch.findById(users[i].branchID)
+            users[i].hierarchyID = await Hierarchy.findById(users[i].hierarchyID)
+        }
         res.send(users);
     }catch(err){
         console.log(err)
