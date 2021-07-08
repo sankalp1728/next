@@ -10,6 +10,10 @@ var approvalSchema = new mongoose.Schema({
         type : String,
         required : true,
         enum : ['Approval Matrix']     //apporvalMatrix, candidate-mrf Mismatch approval, Bussiness, BCG, interview
+    }, 
+    documentId : {
+        type : String,
+        required : true,
     },
     status : {
         type : String,

@@ -53,6 +53,30 @@ const mrfRequestSchema = new Schema({
         required : true
     },
 
+    candidates : {
+        requirement : {
+            type : Number,
+            required : true
+        },
+        shortlisted : {
+            type : Number,
+            required : true
+        },
+        screening : {
+            type : Number,
+            required : true
+        },
+        lined_up : {
+            type : Number,
+            required : true
+        },
+        interviewed : {
+            type : Number,
+            required : true
+        },
+
+    },
+
     location : {
         type : String,
         required : true

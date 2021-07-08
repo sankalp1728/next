@@ -139,6 +139,7 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
         // generate an approval and check for every user that is present in the approval matrix
         var approv = {
             type : "Approval Matrix",
+            documentId : mrfApproval._id,
             status : "None"
         }
 

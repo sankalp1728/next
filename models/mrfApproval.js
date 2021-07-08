@@ -19,7 +19,8 @@ const MRFApprovalSchema = new Schema({
         },
         status : {
             type : String,
-            required : true
+            required : true,
+            enum : ['None','Accept','Reject']
         }
 
     }]

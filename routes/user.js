@@ -84,7 +84,9 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         const text  = "A new employee has been added into the system, the email " + employee.email + "password of the user is " + password
         const html = undefined;
         mailer(req.user,notifRecievers, Subject, text, html)
-        res.send(password)
+        res.json({
+            password : password
+        })
     }catch(err){
         console.log(err);
         res.status(400).send(err)
