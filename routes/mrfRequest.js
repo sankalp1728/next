@@ -65,6 +65,10 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
             throw new Error("Branch Invalid")
         }
 
+        // Handle the candidate requirement
+
+
+
         // put status to unapproved
 
         req.body.status = "unapproved"

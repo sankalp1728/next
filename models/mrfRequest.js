@@ -58,11 +58,15 @@ const mrfRequestSchema = new Schema({
             type : Number,
             required : true
         },
+        screening : {
+            type : Number,
+            required : true
+        },
         shortlisted : {
             type : Number,
             required : true
         },
-        screening : {
+        BusinessEval : {
             type : Number,
             required : true
         },

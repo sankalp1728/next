@@ -103,7 +103,7 @@ router.delete("/user",passport.authenticate("jwt",{session : false}),async(req,r
                 Access : "Insufficient"
             })
         }
-        const user = await User.findById(req.body._id)
+        const user = await User.findByIdAndDelete(req.body._id)
         console.log(user)
         res.send({
             Success : true
