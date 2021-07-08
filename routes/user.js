@@ -85,7 +85,8 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         const html = undefined;
         mailer(req.user,notifRecievers, Subject, text, html)
         res.json({
-            password : password
+            password : password,
+            Success : true
         })
     }catch(err){
         console.log(err);
