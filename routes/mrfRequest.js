@@ -20,7 +20,7 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
             })
         }
 
-        const mrf = Mrf.find()
+        const mrf = await MrfRequest.find()
         res.send(mrf)
     
     }catch(err){
@@ -67,6 +67,17 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
 
         // Handle the candidate requirement
 
+        req.body.candidates = {
+            requirement : req.body.candidates.requirement,
+            screening : 0,
+            businessEval : 0,
+            linedUp : 0,
+            interviewed : 0,
+            shortlisted : 0,
+            BCGVerified : 0,
+            hired : 0
+        }
+
 
 
         // put status to unapproved
@@ -106,14 +117,14 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
             for(i = 0 ; i<=approverIndex ; i++){
                 mrfApproval.Approvers.push({
                     _id : approval.approversID[i]._id,
-                    status : true
+                    status : 'Accept'
                 })
             }
             // from approverIndex+1 to finish
             for(i = approverIndex+1 ; i<=approval.approversID.length ; i++){
                 mrfApproval.Approvers.push({
                     _id : approval.approversID[i]._id,
-                    status : false
+                    status : 'None'
                 })
             }
             
@@ -122,7 +133,7 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
             for(i = 0 ; i<approval.approversID.length ; i++){
                 mrfApproval.Approvers.push({
                     _id : approval.approversID[i]._id,
-                    status : false
+                    status : "None"
                 })
             }
         }
@@ -133,7 +144,7 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
             
             mrfApproval.Approvers.push({
                 _id : approval.approversID[i]._id,
-                status : false
+                status : 'None'
             })
         }
 

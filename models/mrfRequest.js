@@ -62,15 +62,11 @@ const mrfRequestSchema = new Schema({
             type : Number,
             required : true
         },
-        shortlisted : {
+        businessEval : {
             type : Number,
             required : true
         },
-        BusinessEval : {
-            type : Number,
-            required : true
-        },
-        lined_up : {
+        linedUp : {
             type : Number,
             required : true
         },
@@ -78,7 +74,18 @@ const mrfRequestSchema = new Schema({
             type : Number,
             required : true
         },
-
+        shortlisted : {
+            type : Number,
+            required : true
+        },
+        BCGVerified : {
+            type : Number,
+            required : true
+        },
+        hired : {
+            type : Number,
+            required : true
+        }
     },
 
     location : {
