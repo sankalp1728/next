@@ -44,8 +44,10 @@ router.post("/approvalmatrix",passport.authenticate("jwt", {session : false}),as
                 Access : "Insufficient"
             })
         }
+        console.log(typeof req.body.hierarchyID)
         req.body.verified = true;
         const hierarchy = await Hierarchy.findById(req.body.hierarchyID)
+        console.log(hierarchy)
         if(!hierarchy){
             throw new Error("The hierarchy_id is incorrect")
         }
@@ -53,7 +55,7 @@ router.post("/approvalmatrix",passport.authenticate("jwt", {session : false}),as
         // check duplicated
 
         const approval = new ApprovalMatrix(req.body)
-        if(approval.approversID.length === new set(approval.approversID).size){
+        if(!approval.approversID.length === new Set(approval.approversID).size){
             res.status(401).send("there are duplicates in approvers")
         }
 

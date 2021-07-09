@@ -27,20 +27,46 @@ router.post("/approval",passport.authenticate("jwt",{session : false}),async(req
                 Access : "Insufficient"
             })
         }
+
+        // there should always be remarks in case of a Rejection
+
         const approval = await Approval.findById(req.body.approvalID)
         if(req.body.status === "Reject" && !req.body.remarks){
             return res.send("Remarks are compulsory with rejection")
         }
+
+        // Case - Rejection
+
+        if(req.body.status === "Reject"){
+            approval.status = "Reject",
+            approval.remarks = req.body.remarks
+        }
+
+        // Rejection.notification send to the reporting manager, the one created the mrf
+
+        
+
+        // Case - Acceptance
         
         if(req.body.status === "Accept"){
             approval.status = "Accept"
             const doc = await ApprovalMatrix.findById(approval.documentId)
+            var i = 0
             for(i = 0 ; i<doc.Approvers.length ; i++){
                 if(doc.Approvers[i]._id === approval.documentId){
-                    doc.Approvers[i].status = 
+                    doc.Approvers[i].status = "Accept"
+                    doc.Approvers[i].remarks = req.body.remarks
                 }
             }
+            // check if he is the last approver
+            // if Yes
+            if(i === (doc.Approvers.length-1)){
+                // send notification to reporting manager(shot down)
+
+            }
         }
+
+        // Acceptance.notification
         
     }catch(err){
         console.log(err)
