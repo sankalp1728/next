@@ -24,10 +24,17 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
         var mrf = await MrfRequest.find().lean()
 
     for(i = 0; i<mrf.length ; i++){
-        console.log(mrf[i].hierarchyID)
+        
         mrf[i].hierarchyID = await Hierarchy.findById({_id : mrf[i].hierarchyID}).exec()
         mrf[i].branchID = await Branch.findById(mrf[i].branchID)
         mrf[i].reportingManager = await User.findById(mrf[i].reportingManager)
+        mrf[i].designation.positionID = await ApprovalMatrix.findById(mrf[i].designation.positionID).lean()
+        console.log(mrf[i].designation.positionID.approversID.length)
+        for(var j = 0 ; j<mrf[i].designation.positionID.approversID.length ; j++){
+            mrf[i].designation.positionID.approversID[i]._id = await User.findById(mrf[i].designation.positionID.approversID[i]._id).select("name").lean()
+            mrf[i].designation.positionID.approversID[i]._id.userId = mrf[i].designation.positionID.approversID[i]._id._id
+            delete mrf[i].designation.positionID.approversID[i]._id._id
+        }
         res.send(mrf)
 
     }

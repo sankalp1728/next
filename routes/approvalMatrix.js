@@ -111,7 +111,9 @@ router.delete("/approvalmatrix",passport.authenticate("jwt",{session : false}),a
             })
         }
         const approval = await ApprovalMatrix.findOneAndDelete({_id : req.body._id})
-        res.send(approval)
+        res.json({
+            success : true
+        })
     }catch(err){
         console.log(err)
         res.send(err)
