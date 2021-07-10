@@ -4,6 +4,7 @@ const passport = require('passport')
 const MrfRequest = require("../models/mrfRequest")
 const Branch = require("../models/branch")
 const ApprovalMatrix = require("../models/approvalMatrix")
+const Hierarchy = mongoose.model('hierarchy')
 const User = require("../models/User")
 const helper = require("../middleware/Access_check")
 const MrfApproval = require("../models/mrfApproval")
@@ -20,8 +21,16 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
             })
         }
 
-        const mrf = await MrfRequest.find()
+        var mrf = await MrfRequest.find().lean()
+
+    for(i = 0; i<mrf.length ; i++){
+        console.log(mrf[i].hierarchyID)
+        mrf[i].hierarchyID = await Hierarchy.findById({_id : mrf[i].hierarchyID}).exec()
+        mrf[i].branchID = await Branch.findById(mrf[i].branchID)
+        mrf[i].reportingManager = await User.findById(mrf[i].reportingManager)
         res.send(mrf)
+
+    }
     
     }catch(err){
         console.log(err)

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const validator = require('validator')
 const { validate } = require('./User')
 
-const hierSchema = Schema({
+const hierSchema = new Schema({
     
     type : {
         type : String,
