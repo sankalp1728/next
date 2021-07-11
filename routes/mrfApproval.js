@@ -4,7 +4,7 @@ const passport = require("passport")
 const helper = require("../middleware/Access_check")
 const Approval = require("../models/approval")
 const ApprovalMatrix = require("../models/approvalMatrix")
-
+const MrfApproval = require("../models/mrfApproval")
 const mrfApproval = require("../models/mrfApproval")
 
 const router = express.Router()
@@ -40,6 +40,10 @@ router.post("/approval",passport.authenticate("jwt",{session : false}),async(req
         if(req.body.status === "Reject"){
             approval.status = "Reject",
             approval.remarks = req.body.remarks
+            const mrfApproval = MrfApproval.findById(approval.documentId)
+            for(i = 0; i<mrfApproval.Approvers.length; i++){
+                if()
+            }
         }
 
         // Rejection.notification send to the reporting manager, the one created the mrf
