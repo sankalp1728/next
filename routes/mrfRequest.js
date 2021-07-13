@@ -24,7 +24,7 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
         var mrf = await MrfRequest.find().lean()
 
     for(i = 0; i<mrf.length ; i++){
-        
+        console.log(mrf[i])
         mrf[i].hierarchyID = await Hierarchy.findById({_id : mrf[i].hierarchyID}).exec()
         mrf[i].branchID = await Branch.findById(mrf[i].branchID)
         mrf[i].reportingManager = await User.findById(mrf[i].reportingManager)

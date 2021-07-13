@@ -77,6 +77,8 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 const mrfApproval = MrfApproval.findById(approval.documentId)
                 const mrf = await MrfRequest.findByIdAndUpdate(mrfApproval.mrfRequestID,{status : "assignment"})
                 // notification to both the CHRO and the reporting manager on the request
+            }else{
+                // prepare the new document
             }
         }
 
