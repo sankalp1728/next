@@ -59,12 +59,13 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         
         if(req.body.status === "Accept"){
             approval.status = "Accept"
-            const doc = await ApprovalMatrix.findById(approval.documentId).lean()
+            const doc = await MrfApproval.findById(approval.documentId).lean()
             var i = 0
             for(i = 0 ; i<doc.Approvers.length ; i++){
                 if(doc.Approvers[i]._id === approval.documentId){
                     doc.Approvers[i].status = "Accept"
-                    doc.Approvers[i].remarks = req.body.remarks
+                    // doc.Approvers[i].remarks = req.body.remarks
+                    // notification to the new approver
                     await doc.save()
                 }
             }
@@ -79,6 +80,9 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 // notification to both the CHRO and the reporting manager on the request
             }else{
                 // prepare the new document
+                // const approval = new Approval({
+                //     userId : 
+                //  })
             }
         }
 
