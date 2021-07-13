@@ -11,6 +11,7 @@
   "author": "Shekhar",
   "license": "ISC",
   "dependencies": {
+    "@pusher/push-notifications-server": "^1.2.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",

@@ -5,13 +5,23 @@ const swaggerJSDocs = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 const hierarchyRouter = require('./routes/hierarchy')
 const user = require('./routes/user')
+const PushNotifications = require('@pusher/push-notifications-server');
 const login = require('./routes/login')
 const branch = require("./routes/branch")
 const userAccess = require("./routes/userAccess")
 const devAccess = require("./routes/devAccess")
 const approvalMatrix = require("./routes/approvalMatrix")
 const mrfRequest = require("./routes/mrfRequest")
+const mrfApproval = require("./routes/mrfApproval")
 const cors = require("cors")
+
+//notification declared
+let beamsClient = new PushNotifications({
+    instanceId : "b24879e8-5451-46e8-b512-e667ccc1a0e1",
+    secretKey: "4C501B1EA5F7801417598D08865E887FFC89F82C64735CD191ECB2DD5C56096A"
+  });
+
+
 
 
 const options = {
@@ -52,6 +62,7 @@ app.use('/',userAccess)
 app.use('/',devAccess)
 app.use('/',approvalMatrix)
 app.use('/',mrfRequest)
+app.use('/',mrfApproval)
 
 
 

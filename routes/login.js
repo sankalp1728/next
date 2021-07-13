@@ -2,11 +2,17 @@ const express = require('express')
 const mongoose = require('mongoose')
 const User = require("../models/User")
 var bcrypt = require('bcryptjs');
+const PushNotifications = require('@pusher/push-notifications-server');
 var jwt = require('jsonwebtoken')
 const keys = require('../keys')
 var emailValidator = require("email-validator");
 const SuperAdmin = require("../models/superAdmin")
 
+
+let beamsClient = new PushNotifications({
+    instanceId: "b24879e8-5451-46e8-b512-e667ccc1a0e1",
+    secretKey: "4C501B1EA5F7801417598D08865E887FFC89F82C64735CD191ECB2DD5C56096A",
+  });
 
 const app = express.Router()
 
@@ -36,6 +42,7 @@ app.post("/login",async(req,res)=>{
             email : user.email,
             Role : user.userRole
         }
+       
         
         jwt.sign(payload,keys.secret_key,{expiresIn : 36000},(err,token)=>{
             console.log({ token : token })

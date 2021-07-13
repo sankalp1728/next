@@ -153,7 +153,7 @@ const mrfRequestSchema = new Schema({
     status : {
         type : String,
         required : true,
-        enum : ["unapproved","rejected" , "open" , "closed", "overdue"]
+        enum : ["unapproved","assignment","rejected" , "open" , "closed", "overdue"]
     },
 
     remarks : {
