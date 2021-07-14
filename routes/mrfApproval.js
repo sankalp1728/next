@@ -30,7 +30,7 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
 
         // there should always be remarks in case of a Rejection
 
-        const approval = await Approval.findById(req.body.approvalID)
+        const approval = await Approval.findById(req.body._id)
         if(req.body.status === "Reject" && !req.body.remarks){
             return res.send("Remarks are compulsory with rejection")
         }
@@ -40,7 +40,8 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         if(req.body.status === "Reject"){
             approval.status = "Reject",
             approval.remarks = req.body.remarks
-            const mrfApproval = MrfApproval.findById(approval.documentId)
+            const mrfApproval = await MrfApproval.findById(approval.documentId)
+            console.log(mrfApproval)
             for(i = 0; i<mrfApproval.Approvers.length; i++){
                 // approval rejected for the current rejecting user
                 if(mrfApproval.Approvers[i]._id === approval.userId){
@@ -49,6 +50,8 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
             }
             // mrf request status changing to rejected and remarks set to what the remarks are in req.body
             const mrf = await MrfRequest.findByIdAndUpdate(mrfApproval.mrfRequestID,{status : "rejected"})
+            await approval.save()
+            await mrfApproval.save()
         }
 
         // Rejection.notification send to the reporting manager, the one created the mrf
@@ -78,13 +81,23 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 const mrfApproval = MrfApproval.findById(approval.documentId)
                 const mrf = await MrfRequest.findByIdAndUpdate(mrfApproval.mrfRequestID,{status : "assignment"})
                 // notification to both the CHRO and the reporting manager on the request
-            }else{
-                // prepare the new document
-                // const approval = new Approval({
-                //     userId : 
-                //  })
+            }
+            // if No
+            else{
+                // prepare the new document for the 
+                const newapproval = new Approval({
+                    userId : doc.Approvers[i+1],
+                    type : "Approval Matrix", 
+                    documentId  : approval.documentId,
+                    status : "None",
+                })
+                await newapproval.save()
             }
         }
+
+        res.json({
+            Success : true
+        })
 
         // Acceptance.notification
         

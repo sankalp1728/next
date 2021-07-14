@@ -71,7 +71,9 @@ router.post("/approvalmatrix",passport.authenticate("jwt", {session : false}),as
 
         
         await approval.save()
-        res.send(approval)
+        res.send({
+            success : true
+        })
     }catch(err){
         console.log(err)
         res.send(err)
