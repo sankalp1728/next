@@ -135,13 +135,15 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
                     _id : approval.approversID[i]._id,
                     status : 'Accept'
                 })
+                console.log(i," loop1")
             }
             // from approverIndex+1 to finish
-            for(i = approverIndex+1 ; i<=approval.approversID.length ; i++){
+            for(i = (approverIndex) ; i<approval.approversID.length ; i++){
                 mrfApproval.Approvers.push({
                     _id : approval.approversID[i]._id,
                     status : 'None'
                 })
+                console.log(i," loop2")
             }
             
         }else{
@@ -151,17 +153,8 @@ router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req
                     _id : approval.approversID[i]._id,
                     status : "None"
                 })
+                console.log(i," loop3")
             }
-        }
-
-        // in case of no duplication 
-
-        for(i = 0 ; i<approval.approversID.length ; i++){
-            
-            mrfApproval.Approvers.push({
-                _id : approval.approversID[i]._id,
-                status : 'None'
-            })
         }
 
         mrfApproval = new MrfApproval(mrfApproval)

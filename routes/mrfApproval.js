@@ -31,6 +31,11 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         // there should always be remarks in case of a Rejection
 
         const approval = await Approval.findById(req.body._id)
+        if(!approval){
+            return res.status(400).json({
+                error : "not approval"
+            })
+        }
         if(req.body.status === "Reject" && !req.body.remarks){
             return res.send("Remarks are compulsory with rejection")
         }
@@ -62,19 +67,20 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         
         if(req.body.status === "Accept"){
             approval.status = "Accept"
-            const doc = await MrfApproval.findById(approval.documentId).lean()
+            const doc = await MrfApproval.findById(approval.documentId)
             var i = 0
+            console.log(doc)
             for(i = 0 ; i<doc.Approvers.length ; i++){
-                if(doc.Approvers[i]._id === approval.documentId){
+                if(doc.Approvers[i]._id === approval.userId){
                     doc.Approvers[i].status = "Accept"
                     // doc.Approvers[i].remarks = req.body.remarks
                     // notification to the new approver
-                    await doc.save()
                 }
             }
+            await doc.save()
             // check if he is the last approver
             // if Yes
-            if(i === (doc.Approvers.length-1)){
+            if(i === (doc.Approvers.length)){
                 // send notification to reporting manager(mrf is live)
                 // send notification to all admin HR
                 // create mrf distribution tab(frontend)
@@ -86,7 +92,7 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
             else{
                 // prepare the new document for the 
                 const newapproval = new Approval({
-                    userId : doc.Approvers[i+1],
+                    userId : doc.Approvers[i+1]._id,
                     type : "Approval Matrix", 
                     documentId  : approval.documentId,
                     status : "None",
