@@ -32,7 +32,7 @@ router.post('/hierarchy',async(req,res) => {
 router.get("/hierarchy", async(req,res)=>{
     try{
         const search = req.body;
-        const data = await hierarchy.find(req.body)
+        const data = await hierarchy.find(req.params)
         console.log(data);
         res.send(data);
     }catch(err){

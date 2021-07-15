@@ -34,7 +34,9 @@ app.post("/login",async(req,res)=>{
             }
         }
         if(!bcrypt.compareSync(req.body.password, user.password)){
-            throw new Error("Password Incorrect")
+            return res.json({
+                err : "password incorrect"
+            })
         }
 
         const payload = {  

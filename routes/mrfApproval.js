@@ -69,7 +69,6 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
             approval.status = "Accept"
             const doc = await MrfApproval.findById(approval.documentId)
             var i = 0
-            console.log(doc)
             for(i = 0 ; i<doc.Approvers.length ; i++){
                 if(doc.Approvers[i]._id === approval.userId){
                     doc.Approvers[i].status = "Accept"
@@ -77,6 +76,7 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                     // notification to the new approver
                 }
             }
+            console.log(doc)
             await doc.save()
             // check if he is the last approver
             // if Yes
@@ -120,7 +120,12 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
                 Access : "Insufficient"
             })
         }
-        const approvals = await Approval.find({userId : req.user._id})
+        const approvals = await Approval.find({userId : req.user._id}).lean()
+        for(i = 0 ; i< approvals.length ; i++){
+            var requestID = await MrfApproval.findById(approvals[i].documentId)
+            approvals[i].mrfInfo = await MrfRequest.findById(requestID.mrfRequestID)
+            
+        }
         res.send(approvals)
     }catch(err){
         console.log(err)
