@@ -192,6 +192,36 @@ router.post('/super-admin/add',async(req,res)=>{
         req.body.password = hash;
         const admin = new SuperAdmin(req.body);
         await admin.save();
+        const userRole = new UserProfile({
+            role : "Super-Admin",
+            Access : {
+                addUser : true,
+                searchUser : true,
+                deleteUser : true,
+                editUser : true,
+                changePassword : true,
+                addBranch : true,
+                showBranch : true,
+                addUserProfile : true,
+                updateUserProfile : true,
+                deleteUserProfile : true,
+                addHeirarchy :  true,
+                removeHeirarchy : true,
+                searchHeirarchy : true,
+                searchUserProfile : true,
+                addUserProfile : true,
+                addApprovalMatrix : true,
+                deleteApprovalMatrix : true,
+                updateApprovalMatrix : true,
+                requestApprovalMatrix : true,
+                addMrfRequest : true,
+                deleteMrfRequest : true,
+                editMrfRequest : true,
+                showMrfRequest : true,
+                showApproval : true,
+                giveApproval : true
+            }
+        })
         console.log("hi")
         res.send({
             success : true

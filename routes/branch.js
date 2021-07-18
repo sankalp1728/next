@@ -25,10 +25,11 @@ router.get("/branch",passport.authenticate("jwt",{session : false}),async(req,re
         if(!await helper.Access_Check(req.user,"searchBranch")){
             throw new Error("Insufficient Access")
         }
+        console.log(req.query)
         const branch = await Branch.find(req.query)
         res.send(branch)
     }catch(err){
-        console.logg(err);
+        console.log(err);
         res.send(err)
     }
 })
