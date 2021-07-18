@@ -222,6 +222,7 @@ router.post('/super-admin/add',async(req,res)=>{
                 giveApproval : true
             }
         })
+        await userProfile.save()
         console.log("hi")
         res.send({
             success : true
