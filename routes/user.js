@@ -12,6 +12,7 @@ const helper = require("../middleware/Access_check")
 const generatePassword = require('../middleware/password_generator')
 
 const SuperAdmin = require("../models/superAdmin")
+const UserProfile = require('../models/UserProfiles')
 const User = require('../models/User')
 const Branch = require("../models/branch")
 const Hierarchy = require("../models/heirarchy")
