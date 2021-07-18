@@ -11,7 +11,6 @@ var mrfDistSchema = new Schema({
         type : String,
         required : true
     },
-    
     mrf : [{
     
         "_id" : {
@@ -22,7 +21,7 @@ var mrfDistSchema = new Schema({
             type : String,
             required : true
         }
-    
+        
     }]
 });
 // Compile model from schema
