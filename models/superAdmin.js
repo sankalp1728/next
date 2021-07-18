@@ -33,7 +33,7 @@ const superAdminSchema = new Schema({
 
     userRole : {
         type : String,
-        default : "Super-Admin"
+        required : true
     },
 
     userType : {

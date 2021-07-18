@@ -191,11 +191,10 @@ router.post('/super-admin/add',async(req,res)=>{
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(req.body.password,salt)
         req.body.password = hash;
-        const admin = new SuperAdmin(req.body);
-        await admin.save();
+        req.body.userType  = "Super-Admin";
         const userRole = new UserProfile({
             role : "Super-Admin",
-            Access : {
+            access : {
                 addUser : true,
                 searchUser : true,
                 deleteUser : true,
@@ -223,7 +222,10 @@ router.post('/super-admin/add',async(req,res)=>{
                 giveApproval : true
             }
         })
-        await userProfile.save()
+        await userRole.save()
+        req.body.userRole = "Super-Admin";
+        const admin = new SuperAdmin(req.body);
+        await admin.save();
         console.log("hi")
         res.send({
             success : true
