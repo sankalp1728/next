@@ -55,8 +55,8 @@ app.use(passport.initialize())
 require("./authentication/Passport")(passport)
 
 
-app.use('/',user)
 app.use('/',login)
+app.use('/',user)
 app.use('/',branch)
 app.use('/',userAccess)
 app.use('/',devAccess)
