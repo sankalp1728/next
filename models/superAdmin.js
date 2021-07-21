@@ -32,8 +32,14 @@ const superAdminSchema = new Schema({
     },
 
     userRole : {
-        type : String,
-        required : true
+        name : {
+            type : String,
+            required : true
+        },
+        _id : {
+            type : String,
+            required : true
+        }
     },
 
     userType : {

@@ -204,7 +204,8 @@ router.post('/super-admin/add',async(req,res)=>{
         const hash = await bcrypt.hashSync(req.body.password,salt)
         req.body.password = hash;
         req.body.userType  = "Super-Admin";
-        const userRole = new UserProfile({
+        if(!await UserProfile.findOne({role : "Super-Admin"})){
+            const userRole = new UserProfile({
             role : "Super-Admin",
             access : {
                 addUser : true,
@@ -234,8 +235,9 @@ router.post('/super-admin/add',async(req,res)=>{
                 giveApproval : true
             }
         })
-        await userRole.save()
-        req.body.userRole = "Super-Admin";
+        await userRole.save()}
+        req.body.userRole.name = "Super-Admin";
+        req.body.userRole._id = await UserProfile({role : "Super-Admin"})
         const admin = new SuperAdmin(req.body);
         await admin.save();
         console.log("hi")

@@ -2,8 +2,8 @@ const mongoose = require("mongoose")
 const UserProfile = require("../models/UserProfiles")
 
 const Access_Check = async(user,Access) => {
-    const userRole = user.userRole
-    console.log(user.userRole)
+    const userRole = user.userRole.name
+    console.log(user.userRole.name)
     if(userRole == "special"){
         const userAccess = await UserAccessibilty.findOne({email : user.email}).access[Access]
         if(userAccess == true){

@@ -42,7 +42,7 @@ app.post("/login",async(req,res)=>{
         const payload = {  
             _id : user._id,
             email : user.email,
-            Role : user.userRole
+            Role : user.userRole.name
         }
        
         
