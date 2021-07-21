@@ -33,11 +33,13 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         const approval = await Approval.findById(req.body._id)
         if(!approval){
             return res.status(400).json({
-                error : "not approval"
+                error : "approval id invalid"
             })
         }
         if(req.body.status === "Reject" && !req.body.remarks){
-            return res.send("Remarks are compulsory with rejection")
+            return res.status().json({
+                error : "Remarks are compulsory with rejection"
+            })
         }
 
         // Case - Rejection

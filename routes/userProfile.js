@@ -55,7 +55,7 @@ router.patch("userprofile",Passport.authenticate("jwt",{session : true}),async(r
                 Access : "Insufficient"
             })
         }
-        const userProfile = UserProfile.findByIdAndUpdate(req.body._id, req.body);
+        const userProfile = await UserProfile.findByIdAndUpdate(req.body._id, req.body);
         res.json({
             Success: true
         })
