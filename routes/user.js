@@ -15,6 +15,7 @@ const SuperAdmin = require("../models/superAdmin")
 const UserProfile = require('../models/UserProfiles')
 const User = require('../models/User')
 const Branch = require("../models/branch")
+const UserAccessability = require("../models/UserAccessebility")
 const Hierarchy = require("../models/heirarchy")
 
 // get all users
@@ -62,6 +63,17 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         if(!await Branch.findById(req.body.branchID)){
             res.status(401).send("The branchID is invalid")
         }
+
+        if(req.body.userRole.name === "special"){           // make user accessability for special cases
+            const userAccess = new UserAccessability({
+                userId : employee._id,
+                access : req.body.access
+            })
+            await userAccess.save()
+            employee.userRole._id = userAccess._id
+        }
+ 
+
         
         var notifRecievers = await User.find({
             locationID : employee.branchID,

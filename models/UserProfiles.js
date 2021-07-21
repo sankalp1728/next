@@ -4,7 +4,8 @@ const Scehma = mongoose.Schema
 const ProfileSchema =  new mongoose.Schema({
     role : {
         type : String,
-        required : true
+        required : true,
+        unique : true
     }, // name of role
 
     access : {

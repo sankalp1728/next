@@ -13,6 +13,7 @@ const devAccess = require("./routes/devAccess")
 const approvalMatrix = require("./routes/approvalMatrix")
 const mrfRequest = require("./routes/mrfRequest")
 const mrfApproval = require("./routes/mrfApproval")
+const userProfile = require("./routes/userProfile")
 const cors = require("cors")
 
 //notification declared
@@ -45,18 +46,19 @@ const swaggerDocs = swaggerJSDocs(options)
 
 const app = express()
 
-app.use(cors())
-app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use(express.json())
+app.use(cors())
 
 //pasport initialization
-app.use(passport.initialize())
 //passport config
 require("./authentication/Passport")(passport)
 
 
+app.use(passport.initialize())
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 app.use('/',login)
 app.use('/',user)
+app.use('/',userProfile)
 app.use('/',branch)
 app.use('/',userAccess)
 app.use('/',devAccess)

@@ -22,7 +22,7 @@ router.post("/branch",passport.authenticate("jwt",{session : false}),async(req,r
 
 router.get("/branch",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
-        if(!await helper.Access_Check(req.user,"searchBranch")){
+        if(!await helper.Access_Check(req.user,"showBranch")){
             throw new Error("Insufficient Access")
         }
         console.log(req.query)
@@ -42,7 +42,7 @@ router.delete("/branch",passport.authenticate("jwt",{session : false}),async(req
            throw new Error("Insufficient Access")
        }
 
-       const branch = await Branch.findOneAndDelete(req.body)
+       const branch = await Branch.findByIdAndDelete(req.body._id)
        res.send({
            Success : true
        })

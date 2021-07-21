@@ -22,10 +22,15 @@ const UserSchema = new Scehma({
     },
 
     userRole : {
-        type : String,
-        required : true,
-        enum : ['Super-Admin','admin','special','HR', 'Interviewer', 'Vendor', 'BCGVerification', 'Campus', 'Employee', ]
-    },// in case special permission, name = special, is to be reffered for access
+        name : {
+            type : String,
+            required : true
+        },
+        _id : {
+            type : String,
+            required : true
+        }
+    },
 
     hierarchyID : {
         type : String,

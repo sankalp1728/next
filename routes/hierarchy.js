@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const hierarchy = require('../models/heirarchy')
-const passport  = require('../authentication/Passport')
+const Passport  = require('../authentication/Passport')
 const Access_Check = require('../middleware/Access_check')
 
 

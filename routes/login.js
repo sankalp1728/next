@@ -28,14 +28,14 @@ app.post("/login",async(req,res)=>{
         if(!user){
             user = await SuperAdmin.findOne({email : req.body.email});
             if(!user){
-                return res.json({
+                return res.status(401).json({
                     email : "Invalid"
                 })
             }
         }
         if(!bcrypt.compareSync(req.body.password, user.password)){
-            return res.json({
-                err : "password incorrect"
+            return res.status(401).json({
+                password : "Invalid"
             })
         }
 
