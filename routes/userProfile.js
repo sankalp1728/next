@@ -47,15 +47,18 @@ router.post("/userprofile",Passport.authenticate("jwt",{session : false}),async(
     }
 })
 
-router.patch("userprofile",Passport.authenticate("jwt",{session : true}),async(req,res)=>{
+router.patch("/userprofile",Passport.authenticate("jwt",{session : false}),async(req,res)=>{
 
     try{
-        if(!await helper.Access_Check(req.user, "editUserProfile")){
+        if(!await helper.Access_Check(req.user, "updateUserProfile")){
             return res.status(401).json({
                 Access : "Insufficient"
             })
         }
-        const userProfile = await UserProfile.findByIdAndUpdate(req.body._id, req.body);
+
+        
+        console.log(req.body._id,req.body.access)
+        const userProfile = await UserProfile.findByIdAndUpdate(req.body._id, {access : req.body.access});
         res.json({
             Success: true
         })

@@ -53,7 +53,9 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         const password = await generatePassword()
         const salt = await bcrypt.genSaltSync(10)
         const hash = await bcrypt.hashSync(password,salt)
+        console.log(req.body)
         req.body.password = hash
+        req.body.userRole._id = "343"
         const employee = new User(req.body)
 
         if(!await Hierarchy.findById(req.body.hierarchyID)){
@@ -64,7 +66,7 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
             res.status(401).send("The branchID is invalid")
         }
 
-        if(req.body.userRole.name === "special"){           // make user accessability for special cases
+        if(req.body.userRole.name === "Special"){           // make user accessability for special cases
             const userAccess = new UserAccessability({
                 userId : employee._id,
                 access : req.body.access

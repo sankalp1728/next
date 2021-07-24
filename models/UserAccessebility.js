@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Scehma = mongoose.Schema
 
 const AccessSchema =  new mongoose.Schema({
-    userID : {
+    userId : {
         type : String,
         requried : true
     },
