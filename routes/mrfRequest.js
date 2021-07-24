@@ -10,6 +10,7 @@ const helper = require("../middleware/Access_check")
 const MrfApproval = require("../models/mrfApproval")
 const router = express.Router()
 const Approval = require("../models/approval")
+const SuperAdmin = require("../models/superAdmin")
 
 
 
@@ -27,7 +28,14 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
         console.log(mrf[i])
         mrf[i].hierarchyID = await Hierarchy.findById(mrf[i].hierarchyID)
         mrf[i].branchID = await Branch.findById(mrf[i].branchID)
-        mrf[i].reportingManager = await User.findById(mrf[i].reportingManager)
+
+        if(await User.findById(mrf[i].reportingManager)){
+            mrf[i].reportingManager = await User.findById(mrf[i].reportingManager)
+        }else{
+            mrf[i].reportingManager = await SuperAdmin.findById(mrf[i].reportingManager)
+        }
+        
+        
         mrf[i].designation.positionID = await ApprovalMatrix.findById(mrf[i].designation.positionID).lean()
         console.log(mrf[i].designation.positionID.approversID.length)
         for(var j = 0 ; j<mrf[i].designation.positionID.approversID.length ; j++){
