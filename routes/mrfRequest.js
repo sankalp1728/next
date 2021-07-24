@@ -15,7 +15,7 @@ const Approval = require("../models/approval")
 
 router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
-        if(!await helper.Access_Check(req.user,"searchMrf")){
+        if(!await helper.Access_Check(req.user,"showMrfRequest")){
             return res.status(401).json({
                 Access : "Insufficient"
             })
@@ -57,7 +57,7 @@ router.get("/mrfrequest",passport.authenticate("jwt",{session : false}),async(re
 
 router.post("/mrfrequest",passport.authenticate("jwt",{session:false}),async(req,res)=>{
     try{
-            if(!await helper.Access_Check(req.user,"addMrf")){
+            if(!await helper.Access_Check(req.user,"addMrfRequest")){
                 return res.status(401).json({
                     Access : "Insufficient"
                 })
