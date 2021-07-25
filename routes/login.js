@@ -19,6 +19,7 @@ const app = express.Router()
 app.post("/login",async(req,res)=>{
 
     try{
+        console.log(req.body.pincode)
         console.log(typeof(req))
         console.log(req)
         if(!emailValidator.validate(req.body.email)){
