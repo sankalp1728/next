@@ -17,7 +17,7 @@ router.get("/approvalmatrix",passport.authenticate("jwt",{session : false}),asyn
         }
 
         const approvalMatrix = await ApprovalMatrix.find(req.params).lean();
-        for(i = 0 ; i< approvalMatrix.length ; i++){
+        for(var i in approvalMatrix){
             element = approvalMatrix[i];
             element.hierarchyID = await Hierarchy.findById(element.hierarchyID);
             console.log(i, element.hierarchyID)
