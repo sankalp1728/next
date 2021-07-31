@@ -20,11 +20,12 @@ router.get("/approvalmatrix",passport.authenticate("jwt",{session : false}),asyn
         for(i = 0 ; i< approvalMatrix.length ; i++){
             element = approvalMatrix[i];
             element.hierarchyID = await Hierarchy.findById(element.hierarchyID);
+            console.log(i, element.hierarchyID)
             element.branchID = await Branch.findById(element.branchID);
-            console.log(element.approversID) 
+            // console.log(element.approversID) 
             for(j = 0 ; j < element.approversID.length ; j++){
                 element2 = element.approversID[j];
-                console.log(element2)
+                // console.log(element2)
                 element2._id = await User.findById(element2).select('_id name email')
             }
         }
