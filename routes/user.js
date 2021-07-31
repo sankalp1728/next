@@ -254,6 +254,42 @@ router.post('/super-admin/add',async(req,res)=>{
 
 
 
+/*
+*req.body = {
+    oldPassword : <old password>,
+    newPassword : <new Password>
+}
+*/
+
+router.post("/changepassword",passport.authenticate("jwt",{session : false}),async(req,res)=>{
+    try{
+        const user = User.findById(req.user)
+        if(!user){
+            const user = SuperAdmin.findById(req.user)
+            if(!user){
+                return res.status(400).json({
+                    err : "Invalid User"
+                })
+            }
+        }
+
+        const salt = bcrypt.genSalt(10)
+        const hash = bcrypt.hash(req.body.password)
+        User.password = hash
+        User.save()
+        res.status(200).json({
+            success : true
+        })
+        
+    }catch(err){
+        console.log(err)
+        res.send(err)
+        
+    }
+})
+
+
+
 
 //user trying to fetch his own data, to view his profile
 

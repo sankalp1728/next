@@ -36,6 +36,15 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 error : "approval id invalid"
             })
         }
+
+
+        if(approval.status === "Reject"|| approval.status === "Accept"){
+            return res.status(400).json({
+                error : "The Approval Request has already been " + approval.status + "ed" 
+            })
+        }
+
+
         if(req.body.status === "Reject" && !req.body.remarks){
             return res.status().json({
                 error : "Remarks are compulsory with rejection"
@@ -48,7 +57,6 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
             approval.status = "Reject",
             approval.remarks = req.body.remarks
             const mrfApproval = await MrfApproval.findById(approval.documentId)
-            console.log(mrfApproval)
             for(i = 0; i<mrfApproval.Approvers.length; i++){
                 // approval rejected for the current rejecting user
                 if(mrfApproval.Approvers[i]._id === approval.userId){
@@ -69,25 +77,26 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         
         if(req.body.status === "Accept"){
             approval.status = "Accept"
+            await approval.save()
             const doc = await MrfApproval.findById(approval.documentId)
             var i = 0
             for(i = 0 ; i<doc.Approvers.length ; i++){
                 if(doc.Approvers[i]._id === approval.userId){
                     doc.Approvers[i].status = "Accept"
+                    break;
                     // doc.Approvers[i].remarks = req.body.remarks
                     // notification to the new approver
                 }
             }
-            console.log(doc)
             await doc.save()
             // check if he is the last approver
             // if Yes
-            if(i === (doc.Approvers.length)){
+            if(i === (doc.Approvers.length-1)){
                 // send notification to reporting manager(mrf is live)
                 // send notification to all admin HR
                 // create mrf distribution tab(frontend)
-                const mrfApproval = MrfApproval.findById(approval.documentId)
-                const mrf = await MrfRequest.findByIdAndUpdate(mrfApproval.mrfRequestID,{status : "assignment"})
+                // const mrfApproval = MrfApproval.findById(approval.documentId)
+                const mrf = await MrfRequest.findByIdAndUpdate(doc.mrfRequestID,{status : "assignment"})
                 // notification to both the CHRO and the reporting manager on the request
             }
             // if No
