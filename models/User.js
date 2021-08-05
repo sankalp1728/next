@@ -18,7 +18,7 @@ const UserSchema = new Scehma({
     userType : {
         type : String,
         required : true,
-        enum : ['admin', 'recruiter', 'vendor', 'employee', 'interviewer'] // priveledges - admin, recruiter, vendor, employee, interviewer
+        enum : ['Super-Admin','admin', 'recruiter', 'vendor', 'employee', 'interviewer'] // priveledges - admin, recruiter, vendor, employee, interviewer
     },
 
     userRole : {
@@ -30,6 +30,12 @@ const UserSchema = new Scehma({
             type : String,
             required : true
         }
+    },
+
+    isActive : {
+        type :Boolean,
+        required : true,
+        default : true
     },
 
     hierarchyID : {

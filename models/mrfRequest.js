@@ -20,7 +20,6 @@ const mrfRequestSchema = new Schema({
             required : false
         }, // approval matrix diff for new and replacement positions, defined by the client
         
-        
     },
 
     hierarchyID : {
@@ -147,7 +146,7 @@ const mrfRequestSchema = new Schema({
     jobType : {
         type : String, 
         required : true,
-        enum : ["Part-Time", "Permanent", "Internship"]
+        enum : ["Part-Time", "Full-Time", "Internship"]
     }, // time frame for contractual and internship -- scehma addition
 
     status : {

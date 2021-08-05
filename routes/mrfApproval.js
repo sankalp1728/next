@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const passport = require("passport")
 const helper = require("../middleware/Access_check")
 const Approval = require("../models/approval")
+const cron = require('node-cron');
 const ApprovalMatrix = require("../models/approvalMatrix")
 const MrfApproval = require("../models/mrfApproval")
 const MrfRequest = require("../models/mrfRequest")
@@ -18,6 +19,17 @@ requestBody = {
     remarks : If rejected then should be mentioned.
 }
 */
+
+// cron.schedule('0 0 * * *', async function() {
+//     const mrfApproval = await MrfApproval.find({
+//         isActive : true
+//     }).lean()
+
+//     for(var i in mrfAprroval){
+//         if(mrfApproval[i].updatedAt)
+//     }
+    
+// });
 
 
 router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async(req,res)=>{
@@ -95,6 +107,7 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 // send notification to reporting manager(mrf is live)
                 // send notification to all admin HR
                 // create mrf distribution tab(frontend)
+                const distribution = await distributor(doc.mrfRequestID)
                 // const mrfApproval = MrfApproval.findById(approval.documentId)
                 const mrf = await MrfRequest.findByIdAndUpdate(doc.mrfRequestID,{status : "assignment"})
                 // notification to both the CHRO and the reporting manager on the request

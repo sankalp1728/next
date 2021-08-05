@@ -8,10 +8,18 @@ const MRFApprovalSchema = new Schema({
         type : String,
         required : true
     },
+    
     tat : {
         type : Number,
         required : true
     },
+
+    isActive : {
+        type : Boolean,
+        required : true,
+        default : true
+    },
+
     Approvers : [{
         _id : {
             type : String,

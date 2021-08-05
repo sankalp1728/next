@@ -19,9 +19,6 @@ const app = express.Router()
 app.post("/login",async(req,res)=>{
 
     try{
-        console.log(req.body.pincode)
-        console.log(typeof(req))
-        console.log(req)
         if(!emailValidator.validate(req.body.email)){
             throw new Error("Email Invalid")
         }
@@ -35,6 +32,7 @@ app.post("/login",async(req,res)=>{
             }
         }
         if(!bcrypt.compareSync(req.body.password, user.password)){
+            consoole.log("erroor")
             return res.status(401).json({
                 password : "Invalid"
             })

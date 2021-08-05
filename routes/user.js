@@ -17,6 +17,7 @@ const User = require('../models/User')
 const Branch = require("../models/branch")
 const UserAccessability = require("../models/UserAccessebility")
 const Hierarchy = require("../models/heirarchy")
+const Recruiter = require("../models/recruiter")
 
 // get all users
 
@@ -58,6 +59,8 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         req.body.userRole._id = "343"
         const employee = new User(req.body)
 
+        
+        
         if(!await Hierarchy.findById(req.body.hierarchyID)){
             res.status(401).send("The hierarchyID is invalid")
         }
@@ -65,7 +68,7 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         if(!await Branch.findById(req.body.branchID)){
             res.status(401).send("The branchID is invalid")
         }
-
+        
         if(req.body.userRole.name === "Special"){           // make user accessability for special cases
             const userAccess = new UserAccessability({
                 userId : employee._id,
@@ -74,8 +77,16 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
             await userAccess.save()
             employee.userRole._id = userAccess._id
         }
- 
+        
+        // if he is a recruiter add him to the recruiters list
 
+        if(employee.userType === "Recruiter"){
+            const recruiter = new Recruiter({
+                userID : employeee._id
+            })
+            recruiter.save()
+        }
+        
         
         var notifRecievers = await User.find({
             locationID : employee.branchID,

@@ -10,14 +10,25 @@ var mrfSchema = new Schema({
         type : String,
         required : true
     },
-    mrfDistID : {
+    mrfDistributorID : {
         type : String,
         required : true
     },
-    candidateID : {
+    recruiterID : {
         type : String,
-        required : false
-    }
+        requried : true
+    },
+    candidates : [{
+        _id : {
+            type : String,
+            required : true
+        },
+        status : {
+            type : String,
+            required : true
+        }   
+    }]
+    
 
 });
 // Compile model from schema

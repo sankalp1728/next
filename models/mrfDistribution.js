@@ -11,6 +11,13 @@ var mrfDistSchema = new Schema({
         type : String,
         required : true
     },
+
+    isActive : {
+        type : Boolean,
+        requried: true,
+        default : false
+    },
+
     mrf : [{
     
         "_id" : {
