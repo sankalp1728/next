@@ -33,8 +33,10 @@ router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res)
 
 
         for(i = 0 ; i< users.length; i++){
-            if(users[i].userRole === "Special"){
-                users[i].access = await UserAccessability.findById(users[i].userRole._id)
+            if(users[i].userRole.name === "Special"){
+                var userAccess = await UserAccessability.findById(users[i].userRole._id, "access")
+                users[i].access = userAccess.access
+                console.log(userAccess.access)
             }
             users[i].branchID = await Branch.findById(users[i].branchID)
             users[i].hierarchyID = await Hierarchy.findById(users[i].hierarchyID)
