@@ -18,6 +18,7 @@ const Branch = require("../models/branch")
 const UserAccessability = require("../models/UserAccessebility")
 const Hierarchy = require("../models/heirarchy")
 const Recruiter = require("../models/recruiter")
+const { findById } = require('../models/recruiter')
 
 // get all users
 
@@ -29,7 +30,12 @@ router.get("/user",passport.authenticate("jwt",{session : false}),async(req,res)
             })
         }
         var users = await User.find().lean();
+
+
         for(i = 0 ; i< users.length; i++){
+            if(users[i].userRole === "Special"){
+                users[i].access = await UserAccessability.findById(users[i].userRole._id)
+            }
             users[i].branchID = await Branch.findById(users[i].branchID)
             users[i].hierarchyID = await Hierarchy.findById(users[i].hierarchyID)
         }
