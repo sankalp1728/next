@@ -18,8 +18,7 @@ const recruiterSchema = new Schema({
     mrfAssigned : [{
         _id : {
             type : String,
-            required : true,
-            unique : true
+            required : true
         },
         isActive : {
             type : Boolean,

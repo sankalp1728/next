@@ -88,11 +88,11 @@ router.post('/user',passport.authenticate("jwt",{session : false}),async(req,res
         
         // if he is a recruiter add him to the recruiters list
 
-        if(employee.userType === "Recruiter"){
+        if(employee.userType === "recruiter"){
             const recruiter = new Recruiter({
-                userID : employeee._id
+                userID : employee._id
             })
-            recruiter.save()
+            await recruiter.save()
         }
         
         

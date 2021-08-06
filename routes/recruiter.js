@@ -1,20 +1,21 @@
 const express = require("express")
 const router = express.Router()
 const Recruiter = require("../models/recruiter")
+const User = require("../models/User")
 const passport = require("passport")
 
 
 
-router.get("/recruiters", passport.authenticate("jwt",{session : false}), async(req,res)=>{
+router.get("/recruitermanagement", passport.authenticate("jwt",{session : false}), async(req,res)=>{
     try{// access_check
 
         
         const recruiters = await Recruiter.find().lean()
 
         for(var i in recruiters){
-            recruiter.userID = await User.findById(recruiter.userID)
+            recruiters[i].userID = await User.findById(recruiters[i].userID)
         }
-        return res.send(recruiters)
+        res.send(recruiters)
     
     }catch(err){
         console.log(err)
@@ -22,15 +23,17 @@ router.get("/recruiters", passport.authenticate("jwt",{session : false}), async(
     }
 })
 
-router.patch("recruiter", passport.authenticate("jwt",{session : false}), async(req,res)=>{
+router.patch("/recruitermanagement", passport.authenticate("jwt",{session : false}), async(req,res)=>{
     try{
-        const recruiter = Recruiter.findById(req.body._id).lean()
+        const recruiter = await Recruiter.findById(req.body._id)
         if(!recruiter){
             return res.status(400).json({
                 err : "No recruiter"
             })
         }
         recruiter.departments = req.body.departments
+
+        await recruiter.save()
         res.json({
             success : true
         })
@@ -40,3 +43,5 @@ router.patch("recruiter", passport.authenticate("jwt",{session : false}), async(
         res.send(err)
     }
 })
+
+module.exports = router
