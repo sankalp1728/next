@@ -1,12 +1,16 @@
 const express = require("express")
-const mongoose = require("mongoose")
 const passport = require("passport")
 const helper = require("../middleware/Access_check")
+const MrfDistribution = require("../models/mrfDistribution")
+const SuperAdmin = require("../models/superAdmin")
 const Approval = require("../models/approval")
-const cron = require('node-cron');
+const Settings = require("../models/settings")
+const Hierarchy = require("../models/heirarchy")
+const User = require("../models/User")
 const ApprovalMatrix = require("../models/approvalMatrix")
 const MrfApproval = require("../models/mrfApproval")
 const MrfRequest = require("../models/mrfRequest")
+const Branch = require("../models/branch")
 
 const router = express.Router()
 
@@ -41,7 +45,7 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
         }
 
         // there should always be remarks in case of a Rejection
-
+        const settings = await Settings.find()
         const approval = await Approval.findById(req.body._id)
         if(!approval){
             return res.status(400).json({
@@ -107,7 +111,19 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                 // send notification to reporting manager(mrf is live)
                 // send notification to all admin HR
                 // create mrf distribution tab(frontend)
-                const distribution = await distributor(doc.mrfRequestID)
+                if(settings.distribution === "manual"){
+                    const superAdmin = await SuperAdmin.findOne({userType : "Super-Admin"})
+                    const mrfDistribution = new MrfDistribution({
+                        userID : superAdmin._id,
+                        mrfRequestID : doc.mrfRequestID,
+                        isActive : true
+                    })
+                    await mrfDistribution.save()
+                    return res.json({
+                        "message" : "mrf Distributed manually"
+                    })
+                }
+                // const distribution = await distributor(doc.mrfRequestID).................
                 // const mrfApproval = MrfApproval.findById(approval.documentId)
                 const mrf = await MrfRequest.findByIdAndUpdate(doc.mrfRequestID,{status : "assignment"})
                 // notification to both the CHRO and the reporting manager on the request
@@ -159,7 +175,28 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
 
 
 router.get("/mrfapproval", async(req,res)=>{
-    
+    try{
+        console.log(34)
+        const mrfApproval = await MrfApproval.find().lean()
+
+        for(var i in mrfApproval) {
+            mrfApproval[i].mrfRequestID = await MrfRequest.findById(mrfApproval[i].mrfRequestID).lean()
+            mrfApproval[i].mrfRequestID.hierarchyID = await Hierarchy.findById(mrfApproval[i].mrfRequestID.hierarchyID).lean()
+            mrfApproval[i].mrfRequestID.branchID = await Branch.findById(mrfApproval[i].mrfRequestID.branchID).lean()
+            mrfApproval[i].mrfRequestID.reportingManager= await User.findById(mrfApproval[i].mrfRequestID.reportingManager).lean()
+            mrfApproval[i].mrfRequestID.designation.positionID = await ApprovalMatrix.findById(mrfApproval[i].mrfRequestID.designation.positionID).lean()
+            // console.log(mrfApproval[i].mrfRequestID.designation.positionID)
+            // console.log(mrfApproval[i].mrfRequestID.reportingManager)
+            for(var j in mrfApproval[i].Approvers){
+                mrfApproval[i].Approvers[j]._id = await User.findById(mrfApproval[i].Approvers[j]._id).lean()
+            }
+        }
+
+        res.send(mrfApproval)
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
 })
 
 

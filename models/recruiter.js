@@ -10,10 +10,7 @@ const recruiterSchema = new Schema({
         unique : true
     },
     
-    departments : [{
-        type : String,
-        required : false,
-    }],
+    departments : [String],
 
     mrfAssigned : [{
         _id : {

@@ -14,7 +14,7 @@ var mrfDistSchema = new Schema({
 
     isActive : {
         type : Boolean,
-        requried: true,
+        required: true,
         default : false
     },
 
