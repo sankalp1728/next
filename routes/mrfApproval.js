@@ -8,6 +8,7 @@ const Settings = require("../models/settings")
 const Hierarchy = require("../models/heirarchy")
 const User = require("../models/User")
 const ApprovalMatrix = require("../models/approvalMatrix")
+const Distributor = require("../middleware/mrfDisribution")
 const MrfApproval = require("../models/mrfApproval")
 const MrfRequest = require("../models/mrfRequest")
 const Branch = require("../models/branch")
@@ -122,6 +123,9 @@ router.post("/approval/mrf",passport.authenticate("jwt",{session : false}),async
                     return res.json({
                         "message" : "mrf Distributed manually"
                     })
+                }else{
+                    const mrf = await MrfRequest.findById(doc.mrfRequestID).lean()
+                    const result = await Distributor.distribution(mrf.candidates.requirement, doc.mrfRequestID)
                 }
                 // const distribution = await distributor(doc.mrfRequestID).................
                 // const mrfApproval = MrfApproval.findById(approval.documentId)
@@ -177,16 +181,21 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
 router.get("/mrfapproval", async(req,res)=>{
     try{
         console.log(34)
-        const mrfApproval = await MrfApproval.find().lean()
+        var mrfApproval = await MrfApproval.find().lean()
 
         for(var i in mrfApproval) {
             mrfApproval[i].mrfRequestID = await MrfRequest.findById(mrfApproval[i].mrfRequestID).lean()
             mrfApproval[i].mrfRequestID.hierarchyID = await Hierarchy.findById(mrfApproval[i].mrfRequestID.hierarchyID).lean()
             mrfApproval[i].mrfRequestID.branchID = await Branch.findById(mrfApproval[i].mrfRequestID.branchID).lean()
-            mrfApproval[i].mrfRequestID.reportingManager= await User.findById(mrfApproval[i].mrfRequestID.reportingManager).lean()
+            let result = await User.findById(mrfApproval[i].mrfRequestID.reportingManager).lean()
+            if(!result){
+                mrfApproval[i].mrfRequestID.reportingManager = await SuperAdmin.findById(mrfApproval[i].mrfRequestID.reportingManager).lean()
+            }else{
+                mrfApproval[i].mrfRequestID.reportingManager = result
+            }
             mrfApproval[i].mrfRequestID.designation.positionID = await ApprovalMatrix.findById(mrfApproval[i].mrfRequestID.designation.positionID).lean()
             // console.log(mrfApproval[i].mrfRequestID.designation.positionID)
-            // console.log(mrfApproval[i].mrfRequestID.reportingManager)
+            console.log(mrfApproval[i].mrfRequestID.reportingManager)
             for(var j in mrfApproval[i].Approvers){
                 mrfApproval[i].Approvers[j]._id = await User.findById(mrfApproval[i].Approvers[j]._id).lean()
             }

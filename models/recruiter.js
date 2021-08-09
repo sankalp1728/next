@@ -24,7 +24,7 @@ const recruiterSchema = new Schema({
         },
         hiredCandidateId : {
             type : String,
-            required : true,
+            required : false,
             default : null
         }
     }]
