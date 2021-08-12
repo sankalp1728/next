@@ -75,7 +75,7 @@ app.use('/',mrfApproval)
 
 port = process.env.PORT || 2233
 
-const url = "mongodb+srv://sankalp1728:Sankalp%231728@cluster0.uqisn.mongodb.net/next2?retryWrites=true&w=majority"
+const url = "mongodb+srv://sankalp1728:Sankalp%231728@cluster0.uqisn.mongodb.net/next?retryWrites=true&w=majority"
 
 
 app.get('/', (req,res)=>{
