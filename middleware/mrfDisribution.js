@@ -14,15 +14,16 @@ const distribution = async(req, mrfRequestID)=>{
     // search for admin
     // first in superAdmin collection
     try{
-        var admin = await SuperAdmin.findOne({userRole : "Super-Admin"})
+        var admin = await SuperAdmin.findOne({userType : "Super-Admin"})
         if(!admin){
             admin = await User.findOne({userRole : "Super-Admin"})
         }
+        const mrfApproval = await MrfApproval.findOne({mrfRequestID : mrfRequestID})
         const mrfRequest = await MrfRequest.findById(mrfRequestID).lean()
         const hierarchy = await Hierarchy.findById(mrfRequest.hierarchyID).lean()
-
+        
         // fetch the hierarchy of the mrfRequest so that the departments of the recruiters can be looked at
-
+        
         if(hierarchy.type === "Sub-Department"){
             hierarchy = await Hierarchy.findOne({name : hierarchy.parent})
         }
@@ -30,16 +31,17 @@ const distribution = async(req, mrfRequestID)=>{
             hierarchy = await Hierarchy.findOne({name : hierarchy.parent})
             hierarchy = await Hierarchy.findOne({name : hierarchy.parent})
         }
-
+        
         // check if settings says odd-even or department wise
+        const settings = await Settings.find()
 
         // get all the recuiters if odd-even
-        if(settings.distribution === "odd-even"){
-            var recruiters = await Recruiter.find().lean().sort({"_id":1})
+        if(settings[0].distribution === "odd-even"){
+            var recruiters = await Recruiter.find().sort({"_id":1})
         }
 
-        if(settings.distribution === "department"){
-            var recruiters = await Recruiter.find().lean().sort({"_id":1})
+        if(settings[0].distribution === "department"){
+            var recruiters = await Recruiter.find().sort({"_id":1})
 
             recruiters = recruiters.filter(data =>{
                 if(data.departments.includes(hierarchy._id)){
@@ -48,10 +50,12 @@ const distribution = async(req, mrfRequestID)=>{
             })
         }
 
-        const settings = await Settings.find().lean()[0]
-        var index = settings.lastRecruiterID
-        if(settings.length === 0){
-            index = recruiter[0]._id;
+        var index = 0;
+
+        for(var x in recruiters){
+            if(settings[0].lastRecruiterID === recruiters[x]._id){
+                index = x
+            }
         }
 
 
@@ -66,21 +70,23 @@ const distribution = async(req, mrfRequestID)=>{
             mrf : []
         })
 
-        
-            
+        console.log(recruiters)
+        console.log(index)
             
         for(var i = index ; i< (req + index) ; i++){
             
 
             // mrf entry
             const mrfi = new Mrf({
-                mrfRequestID : mrfRequest,
-                mrfApprovalID : MrfApproval._id,
+                mrfRequestID : mrfRequest._id,
+                mrfApprovalID : mrfApproval._id,
                 mrfDistributorID : admin._id,
                 rectruiterID : recruiters[i%recruiters.length]._id
             })
 
             mrf.push(mrfi)
+
+            console.log(i, mrfi)
 
             // distribution entry
             const distEntry = {

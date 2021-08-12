@@ -257,8 +257,10 @@ router.post('/super-admin/add',async(req,res)=>{
             }
         })
         await userRole.save()}
-        req.body.userRole.name = "Super-Admin";
-        req.body.userRole._id = await UserProfile({role : "Super-Admin"})
+        req.body.userRole = {
+            _id : (await UserProfile.findOne({role : "Super-Admin"}))._id,
+            name : "Super-Admin",
+        }
         const admin = new SuperAdmin(req.body);
         await admin.save();
         console.log("hi")

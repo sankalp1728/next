@@ -166,8 +166,12 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
         }
         const approvals = await Approval.find({userId : req.user._id}).lean()
         for(i = 0 ; i< approvals.length ; i++){
-            var requestID = await MrfApproval.findById(approvals[i].documentId)
-            approvals[i].mrfInfo = await MrfRequest.findById(requestID.mrfRequestID)
+            var requestID = await MrfApproval.findById(approvals[i].documentId).lean()
+            approvals[i].postion = requestID.position
+            approvals[i].mrfInfo = await MrfRequest.findById(requestID.mrfRequestID).lean()
+            approvals[i].mrfInfo.hierarchyID = 
+            approvals[i].mrfInfo.branchID = 
+            approvals[i].mrfInfo.reportingManager = 
             
         }
         res.send(approvals)

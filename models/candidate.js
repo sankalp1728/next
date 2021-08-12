@@ -9,7 +9,7 @@ const candidateSchema = new Scehma({
     },
 
     mrfID : {
-        tpye : String,
+        type : String,
         required : true
     },
 
@@ -21,10 +21,23 @@ const candidateSchema = new Scehma({
     contact : [{
         type : String
     }],
+    // validate check
 
-    Email : [{
+    social : {
+        skype : {
+            type : String,
+            required : false
+        },
+        linkedIn : {
+            type : String,
+            required : false
+        }
+    },
+
+
+    email : {
         type : String
-    }], // used as primary
+    }, // used as primary
 
     address : {
         current : {
@@ -36,14 +49,15 @@ const candidateSchema = new Scehma({
             required : true
         }
     },
+    
 
-    dateOfBirth : {
+    dob : {
         type : Date,
         required : true
     },
 
-    p_ID : {
-        PAN : {
+    pid : {
+        pan : {
             type : String,
             required : true
         },
@@ -54,7 +68,8 @@ const candidateSchema = new Scehma({
     },
 
     fatherName : {
-        type : String
+        type : String,
+        required :true
     },
 
     gender : {
@@ -118,10 +133,6 @@ const candidateSchema = new Scehma({
         age : {
             type : Number,
             required : true
-        },
-        employementHistoryId : {
-            type : String,
-            required : true
         }
     },
 
@@ -130,11 +141,6 @@ const candidateSchema = new Scehma({
         default : "",
         required : false
     },
-
-    mrfMismatch : {
-        type : String,
-        default : false
-    },
     
     remarks : {
         type : String
@@ -142,5 +148,7 @@ const candidateSchema = new Scehma({
 
 })
 
+const candidateModel = mongoose.model( "candidate", candidateSchema)
+module.exports = candidateModel
 // screening steps will be addded as per the approval requirements
 // screening approvals will be in control of HR. Can skip bussiness people.
