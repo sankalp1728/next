@@ -12,6 +12,7 @@ const Distributor = require("../middleware/mrfDisribution")
 const MrfApproval = require("../models/mrfApproval")
 const MrfRequest = require("../models/mrfRequest")
 const Branch = require("../models/branch")
+const { findById } = require("../models/User")
 
 const router = express.Router()
 
@@ -169,9 +170,9 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
             var requestID = await MrfApproval.findById(approvals[i].documentId).lean()
             approvals[i].postion = requestID.position
             approvals[i].mrfInfo = await MrfRequest.findById(requestID.mrfRequestID).lean()
-            approvals[i].mrfInfo.hierarchyID = 
-            approvals[i].mrfInfo.branchID = 
-            approvals[i].mrfInfo.reportingManager = 
+            approvals[i].mrfInfo.hierarchyID = await Hierarchy.findById(approvals[i].mrfInfo.hierarchyID).lean()
+            approvals[i].mrfInfo.branchID = await Branch.findById(approvals[i].mrfInfo.branchID).lean()
+            approvals[i].mrfInfo.reportingManager = await User.findById(approvals[i].mrfInfo.reportingManager).lean()
             
         }
         res.send(approvals)
