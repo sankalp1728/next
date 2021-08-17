@@ -173,7 +173,7 @@ router.get("/approval",passport.authenticate("jwt",{session : false}),async(req,
             approvals[i].mrfInfo.hierarchyID = await Hierarchy.findById(approvals[i].mrfInfo.hierarchyID).lean()
             approvals[i].mrfInfo.branchID = await Branch.findById(approvals[i].mrfInfo.branchID).lean()
             approvals[i].mrfInfo.reportingManager = await User.findById(approvals[i].mrfInfo.reportingManager).lean()
-            approvals[i].mrfInfo.designation.positionID = await await ApprovalMatrix.findOne(approvals[i].mrfInfo.designation.positionID).lean()
+            approvals[i].mrfInfo.designation.positionID = await ApprovalMatrix.findById(approvals[i].mrfInfo.designation.positionID).select("position").lean()
             
         }
         res.send(approvals)
