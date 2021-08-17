@@ -32,7 +32,7 @@ app.post("/login",async(req,res)=>{
             }
         }
         if(!bcrypt.compareSync(req.body.password, user.password)){
-            consoole.log("erroor")
+            console.log("error")
             return res.status(401).json({
                 password : "Invalid"
             })
