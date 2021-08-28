@@ -16,6 +16,7 @@ const mrfRequest = require("./routes/mrfRequest")
 const mrfApproval = require("./routes/mrfApproval")
 const recruiter = require("./routes/recruiter")
 const userProfile = require("./routes/userProfile")
+const mrfDist = require("./routes/mrfDist")
 const cors = require("cors")
 
 //notification declared
@@ -69,6 +70,7 @@ app.use('/',devAccess)
 app.use('/',approvalMatrix)
 app.use('/',mrfRequest)
 app.use('/',mrfApproval)
+app.use('/', mrfDist)
 
 
 

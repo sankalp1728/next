@@ -1,28 +1,32 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const router = express.Router()
-const MrfDist = require("../models/mrfDistribution")
+const MrfDist = mongoose.model("mrfDist")
 const Mrf = require("../models/mrf")
 const MrfRequest = require("../models/mrfRequest")
 const Recruiter = require("../models/recruiter")
+const User = require("../models/User")
 const passport = require("passport")
-const MrfRequest = require("../models/mrfRequest")
 const MrfApproval = require("../models/mrfApproval")
 
 
 router.get("/mrfdistribution",passport.authenticate("jwt",{session : false}),async(req,res)=>{
     try{
-        const mrfDistribution = await MrfDist.find({userID : req.user.userID}).lean()
+        console.log(req.user._id)
+        var mrfDistribution = await MrfDist.find().lean()
+        console.log(mrfDistribution)
         
         for(var i in mrfDistribution){
-            mrfDistribution[i].mrfRequestID = await MrfRequest.findById(mrfDisribution.mrfRequestID).lean()
+            mrfDistribution[i].mrfRequestID = await MrfRequest.findById(mrfDistribution[i].mrfRequestID).lean()
+            // console.log(mrfDistribution[i].mrfRequestID)
             for(var j in mrfDistribution[i].mrf){
-                mrfDistribution[i].mrf[j]._id = await Mrf.findById(mrfDistribution[i].mrf[j]._id)
+                mrfDistribution[i].mrf[j]._id = await Mrf.findById(mrfDistribution[i].mrf[j]._id).lean()
                 
-                mrfDistribution[i].mrf[j].recruiterID = await User.findById(await Recruiter.findById(mrfDistribution[i].mrf[j].recruiterID).userID).lean()
+                mrfDistribution[i].mrf[j].recruiterID = await Recruiter.findById(mrfDistribution[i].mrf[j].recruiterID).lean()
+                mrfDistribution[i].mrf[j].recruiterID = await User.findById(mrfDistribution[i].mrf[j].recruiterID.userID).lean()
             }
         }
-        res.send(mrfDisribution)
+        res.send(mrfDistribution)
     }catch(err){
         console.log(err)
         res.send(err)
@@ -60,3 +64,5 @@ router.post("/mrfdistribution", async(req,res)=>{
 
     }
 })
+
+module.exports = router
