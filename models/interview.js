@@ -12,6 +12,11 @@ const interviewSchema = new Scehma({
         required : true
     },
 
+    mrfId : {
+        type : String,
+        required : true
+    },
+
     interviewerId : {
         type : String,
         required : true

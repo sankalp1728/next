@@ -3,9 +3,10 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const swaggerJSDocs = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
+const cors = require("cors")
+const PushNotifications = require('@pusher/push-notifications-server');
 const hierarchyRouter = require('./routes/hierarchy')
 const user = require('./routes/user')
-const PushNotifications = require('@pusher/push-notifications-server');
 const login = require('./routes/login')
 const branch = require("./routes/branch")
 const userAccess = require("./routes/userAccess")
@@ -17,7 +18,6 @@ const mrfApproval = require("./routes/mrfApproval")
 const recruiter = require("./routes/recruiter")
 const userProfile = require("./routes/userProfile")
 const mrfDist = require("./routes/mrfDist")
-const cors = require("cors")
 
 //notification declared
 let beamsClient = new PushNotifications({

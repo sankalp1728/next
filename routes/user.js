@@ -209,6 +209,7 @@ router.patch("/user/forgotpassword",async(req,res)=>{
         const notifRecievers = [];
         notifRecievers.push({email : req.body.email})
         mailer(req.body,notifRecievers,Subject,text,html)
+        console.log(password, user)
         res.send("saved")
     }catch(err){
         console.log(err)

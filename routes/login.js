@@ -24,7 +24,7 @@ app.post("/login",async(req,res)=>{
         }
         var user = await User.findOne({email : req.body.email})
         if(!user){
-            user = await SuperAdmin.findOne({email : req.body.email});
+            user = await SuperAdmin.findOne({email : req.body.email})
             if(!user){
                 return res.status(401).json({
                     email : "Invalid"
@@ -43,7 +43,7 @@ app.post("/login",async(req,res)=>{
             email : user.email,
             Role : user.userRole.name
         }
-       
+       console.log(user._id, user._id instanceof mongoose.Types.ObjectId)
         
         jwt.sign(payload,keys.secret_key,{expiresIn : 36000},(err,token)=>{
             console.log({ token : token })
