@@ -14,6 +14,14 @@ var mrfSchema = new Schema({
         type : String,
         required : true
     },
+
+    sourceID : [{
+        userID : {
+            type : String,
+            required : false
+        }
+    }],
+
     recruiterID : {
         type : String,
         requried : true

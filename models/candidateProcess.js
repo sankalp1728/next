@@ -31,9 +31,27 @@ const candidateProcessSchema = new Schema({
         type : String,
         required : false
     },
+
+    status : {
+        type : Number,
+        required : true,
+        default : 1
+    }, // for each and every stage there will be a number 
+
+    /*
+    *   candidate Added and not screened - 1
+    *   candidate Screened by HR - 2
+    *   candidate Screened by Bussiness Evaluators - 3
+    *   candidate on interviews - 4
+    *   candidate on BackgroundVerification - 5
+    *   candidate on offer Letter - 6
+    *   candidate hired - 7
+    */
+
+
     screening : {
         status : {
-            type : String,
+            type : Boolean,
             required : false
         },
         userID : {
@@ -43,7 +61,7 @@ const candidateProcessSchema = new Schema({
     },// mrfID recruiter will give screening verdict
     businessEval : {
         status : {
-            type : String,
+            type : Boolean,
             required: false
         },
         userID : {

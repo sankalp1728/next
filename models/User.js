@@ -93,7 +93,27 @@ const UserSchema = new Scehma({
     branchID : {
         type : String,
         required : true
-    }
+    },
+
+    mrfID : [{
+        '_id' : {
+            type : String,
+            required : false
+        }
+    }],
+
+    bcgVerificationID : [{
+        "_id" : {
+            type : String,
+            required: false
+        },
+        "status" : {
+            type : Boolean,
+            required : false,
+            default : null
+        }
+    }]
+    // to be used only in case of vendors and refferals(not in case of Recruiters)
 })
 
 const UserModel = mongoose.model("User", UserSchema)

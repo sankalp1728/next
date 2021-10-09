@@ -15,6 +15,7 @@ const devAccess = require("./routes/devAccess")
 const approvalMatrix = require("./routes/approvalMatrix")
 const mrfRequest = require("./routes/mrfRequest")
 const mrfApproval = require("./routes/mrfApproval")
+const candidateDetails = require("./routes/candidateDetails")
 const recruiter = require("./routes/recruiter")
 const userProfile = require("./routes/userProfile")
 const mrfDist = require("./routes/mrfDist")
@@ -71,6 +72,7 @@ app.use('/',approvalMatrix)
 app.use('/',mrfRequest)
 app.use('/',mrfApproval)
 app.use('/', mrfDist)
+app.use('/',candidateDetails)
 
 
 
