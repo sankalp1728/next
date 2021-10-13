@@ -1,5 +1,5 @@
-schema updation - candidateProcess,
-api - candidateProcess (POST, GET)
+// schema updation - candidateProcess,
+// api - candidateProcess (POST, GET)
 
 
 {
@@ -7,6 +7,7 @@ api - candidateProcess (POST, GET)
     "currentStage" : "screening", // keep in enum for all 5 stages
     "candidateID" : "candidate_id",
     "recruitorID" : "1234556",
+    "sourceID" : "source_id",
     "mrfID" : "mrf_id", 
     "stages" :{
         "screening" : {

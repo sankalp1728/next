@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const {isValidPhone} = require("valid-phone-number")
 const Schema = mongoose.Schema
 
 const candidateDetailsSchema = new Schema({
@@ -14,9 +15,16 @@ const candidateDetailsSchema = new Schema({
         required : true
     },
 
-    contact : [{
-        type : String
-    }],
+    phone : [{
+        type: String,
+        validate: {
+          validator: function(v) {
+            return isValidPhone(v);
+          },
+          message: props => `${props.value} is not a valid phone number!`
+        },
+        required: [true, 'User phone number required']
+      }],
     // validate check
 
     social : {
@@ -37,12 +45,52 @@ const candidateDetailsSchema = new Schema({
 
     address : {
         current : {
-            type : String,
-            required : true
+            street : {
+                type : String,
+                required : false
+            },
+            city : {
+                type : String,
+                required : false
+            },
+            state : {
+                type : String,
+                required : false
+            },
+            landmark : {
+                type : String,
+                required : true
+            },
+            pincode : {
+                type : String,
+                required: function() {
+                    return this.pincode.length === 6
+                }
+            }
         },
         permanent : {
-            type : String,
-            required : true
+            street : {
+                type : String,
+                required : false
+            },
+            city : {
+                type : String,
+                required : false
+            },
+            state : {
+                type : String,
+                required : false
+            },
+            landmark : {
+                type : String,
+                required : true
+            },
+            pincode : {
+                type : String,
+                required: function() {
+                    return this.pincode.length === 6
+                }
+            }
         }
     },
     
@@ -70,8 +118,9 @@ const candidateDetailsSchema = new Schema({
 
     gender : {
         type : String,
-        required : true
-    },  
+        required : true,
+        enum : ["male", "female", "non-binary"]
+    },
 
     differentlyAbled  : {
         type : Boolean,
@@ -84,9 +133,10 @@ const candidateDetailsSchema = new Schema({
 
         //10,12,G,PG,anythings else, others etc
     },
+
     certifications : [{
         type : String,
-        required : true
+        required : false
     }],
 
     ComputerProficiency : {
@@ -94,27 +144,7 @@ const candidateDetailsSchema = new Schema({
         required : true
     },
 
-    recruiterID : {
-        type : String,
-        required : false
-    },
-
-    sourcetype : {
-        type : String,
-        required : false
-        //vendor,referral,HR,Portal  use JWT
-    },
-
-    SourceID : {
-        type : String,
-        required : false
-    }, // userID
-
-    BCGagencyID : {
-        type : String,
-        required : false
-    },
-
+    
     employement : {
         total_experience : {
             type : Number,
@@ -125,7 +155,7 @@ const candidateDetailsSchema = new Schema({
             type : Number,
             required  : true
         },
-
+        
         age : {
             type : Number,
             required : true
@@ -133,18 +163,18 @@ const candidateDetailsSchema = new Schema({
     },
     
     educationHistory : [{
-
+        
         school : {
             type : String,
-            required : true
+            required : false
         },
         degree  : { 
             type : String,
-            required : true
+            required : false
         },
-        fieldOfStudy : { 
+        specialization : { 
             type : String,
-            required : true
+            required : false
         },
         startDate : { 
             type : Date,
@@ -152,63 +182,59 @@ const candidateDetailsSchema = new Schema({
         },
         endDate : { 
             type : Date,
-            required : true
+            required : false
         },
         grade : {
             type : mongoose.Decimal128,
-            required : true
+            required : false
         },
         description : {
             type : String,
-            required : true
+            required : false
         }
     }],
-
+    
     employementHistory : [{
-
-        title : {
+        
+        position : {
             type : String,
-            required : true
+            required : false
         },
         employementType : {
             type : String,
-            required : true,
+            required : false,
             enum : ['Internship','Full-Time','Temporary']
         },
-        companyID : {
+        companyName : {
             type : String,
-            required: true
+            required: false
         },
         location : {
             type : String,
-            required : true
+            required : false
         },
         startDate : {
             type : Date,
-            required: true
+            required: false
         },
         endDate : {
             type : Date,
-            required: true
+            required: false
         },
         skills : [String]
     }],
+
+    sourceID : {
+        type : String,
+        required : false
+    }, // userID
+
+    mrfID : {
+        type : String,
+        required: false
+    },
     
     remarks : {
-        type : String
-    },
-
-    candidateID : {
-        type : String,
-        required : true
-    },
-
-    educationID : {
-        type  : String,
-        required : false
-    },
-
-    employementID : {
         type : String,
         required : false
     }
