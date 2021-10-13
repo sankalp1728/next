@@ -8,7 +8,6 @@ const Router = express.Router()
 
 Router.get("/candidateeducation/:id", async(req,res)=> {
     try{
-        
         if(request.params.id == null){
             return res.send({
                 error : "There is no ID parameter in parameters of the request url"

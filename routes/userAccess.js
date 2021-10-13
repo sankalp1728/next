@@ -1,6 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const { Passport } = require("passport")
+const passport = require("passport")
 const UserProfile = require("../models/UserProfiles")
 const passport= require("passport")
 const helper = require("../middleware/Access_check")

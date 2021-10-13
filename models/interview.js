@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 const Scehma = mongoose.Schema
 
 const interviewSchema = new Scehma({
-    lineUpId : {
-        type : String,
-        required : true
-    },
-
+    
     candidateId : {
         type : String,
         required : true

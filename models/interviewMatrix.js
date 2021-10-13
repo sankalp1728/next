@@ -14,7 +14,6 @@ const interviewMatrixSchema = new Scehma({
         userId : {
             type : String
         }
-
     }]
 
 })

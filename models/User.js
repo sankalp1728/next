@@ -95,24 +95,10 @@ const UserSchema = new Scehma({
         required : true
     },
 
-    mrfID : [{
-        '_id' : {
-            type : String,
-            required : false
-        }
-    }],
-
-    bcgVerificationID : [{
-        "_id" : {
-            type : String,
-            required: false
-        },
-        "status" : {
-            type : Boolean,
-            required : false,
-            default : null
-        }
-    }]
+    company : {
+        type : String,
+        required: true
+    }
     // to be used only in case of vendors and refferals(not in case of Recruiters)
 })
 

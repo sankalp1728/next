@@ -12,6 +12,7 @@ const branch = require("./routes/branch")
 const userAccess = require("./routes/userAccess")
 const settings = require("./routes/settings")
 const devAccess = require("./routes/devAccess")
+const company = require("./routes/company")
 const approvalMatrix = require("./routes/approvalMatrix")
 const mrfRequest = require("./routes/mrfRequest")
 const mrfApproval = require("./routes/mrfApproval")
@@ -73,6 +74,7 @@ app.use('/',mrfRequest)
 app.use('/',mrfApproval)
 app.use('/', mrfDist)
 app.use('/',candidateDetails)
+app.use('/',company)
 
 
 

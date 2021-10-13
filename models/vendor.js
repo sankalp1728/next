@@ -1,6 +1,11 @@
-const mongoose = require("")
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
-// todo 
+const vendorSchema = new Schema({
+    userID : {
+        type : String,
+        required : true
+    },
 
-userID - foriegnkey
-mrfs : []
+    mrfID : [{type : mongoose.Types.ObjectId, required : false}]
+})

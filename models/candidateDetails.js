@@ -132,6 +132,68 @@ const candidateDetailsSchema = new Schema({
         }
     },
     
+    educationHistory : [{
+
+        school : {
+            type : String,
+            required : true
+        },
+        degree  : { 
+            type : String,
+            required : true
+        },
+        fieldOfStudy : { 
+            type : String,
+            required : true
+        },
+        startDate : { 
+            type : Date,
+            required :                                                                                                                                                                                                     true
+        },
+        endDate : { 
+            type : Date,
+            required : true
+        },
+        grade : {
+            type : mongoose.Decimal128,
+            required : true
+        },
+        description : {
+            type : String,
+            required : true
+        }
+    }],
+
+    employementHistory : [{
+
+        title : {
+            type : String,
+            required : true
+        },
+        employementType : {
+            type : String,
+            required : true,
+            enum : ['Internship','Full-Time','Temporary']
+        },
+        companyID : {
+            type : String,
+            required: true
+        },
+        location : {
+            type : String,
+            required : true
+        },
+        startDate : {
+            type : Date,
+            required: true
+        },
+        endDate : {
+            type : Date,
+            required: true
+        },
+        skills : [String]
+    }],
+    
     remarks : {
         type : String
     },

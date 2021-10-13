@@ -5,22 +5,40 @@ const passport = require('passport')
 
 router.get("/candidates/:id",passport.authenticate("jwt", {session:false}), async(req,res)=>{
     try{
-        console.log(typeof request.params.id)
-        if(req.params.id === null){
-            candidates = CandidateDetails.find().lean()
-            return res.send({
-                message : " trying to work"
-            })
-        }else{
-            res.send({
-                error : "apparently didn't work"
-            })
-        }
+        console.log(typeof req.params.id)
+        candidate = await CandidateDetails.findById(req.params.id)
+        console.log(candidate)
+        res.send(candidate)
     }
     catch(err){
         console.log(err)
         res.send(err)
     }
 })
+
+router.get("/candidates", passport.authenticate("jwt", {session : false}), async(req,res)=>{
+    try{
+        console.log(req.user._id)
+        const user = User.findById(req.user._id).lean()
+
+        if(user.userType === "vendor"){
+            return res.send({
+                message : "trying something new"
+            })
+        }
+
+
+        
+    }
+    catch(err){
+        res.send(err)
+    }
+})
+
+
+router.post("/candidates", passport("jwt",{session : false}), async(req,res)=>{
+    
+})
+
 
 module.exports = router
