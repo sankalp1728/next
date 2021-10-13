@@ -1,65 +1,62 @@
+schema updation - candidateProcess,
+api - candidateProcess (POST, GET)
+
+
 {
     "_id" : "1234566789",
-    "currentStage" : 3, // stages array index
+    "currentStage" : "screening", // keep in enum for all 5 stages
     "candidateID" : "candidate_id",
     "recruitorID" : "1234556",
     "mrfID" : "mrf_id", 
-    "stages" :[
-        {
-        "stage_num" : 1,
-        "name" : "screening"   
-        },
-        {
-            "stage_num" : 2,
-            "name" : "interview",
+    "stages" :{
+        "screening" : {
+                "stage" : 1
+            },
+        "interview" : {
+            "stage" : 2,
             "rounds" : 
                 [{
-                    "interviewTime" : "12/12/2021 , 10:30",
+                    "scheduleTime" : "12/12/2021 , 10:30",
                     "interviewStatus": "under_review",   // ["Accepted","rejected","under_review", lineup_did_not_showup],
                     "interviewerId": "1234",    // for location 
-                    "round_num":1,
                     "interview_remarks" : "Talented boi",
                     "lineup_remarks":"Did not"
                 },
                 {
-                    "interviewTime" : "12/12/2021 , 10:30",
+                    "scheduleTime" : "12/12/2021 , 10:30",
                     "interviewStatus": "Accepted",   // ["Accepted","rejected","under_review"],
                     "interviewerId": "12343",    // for location 
-                    "round_num":2,
                     "interview_remarks" : "sdfsds",
                     "lineup_remarks":"Did not"
                 },
                 {
-                    "interviewTime" : "12/12/2021 , 10:30",
+                    "scheduleTime" : "12/12/2021 , 10:30",
                     "interviewStatus": "Accepted",   // ["Accepted","rejected","under_review"],
                     "interviewerId": "12343",    // for location 
-                    "round_num":2,
                     "interview_remarks" : "sdfsds",
                     "lineup_remarks":"Did not"
                 }
             ]
  
         },
-        {
-            "stage_num" : 3,
-            "name" : "Documentation",
+        "documentation" : {
+            "stage" : 3,
             "adhar_status":true,
             "pan_status":true,
-            "photo" : true,
+            "photo" : true
         },
-        {
-            "stage_num" : 4,
+        "bgv" : {
+            "stage" : 4,
             "name" : "BGV",
             "bgv_vendor_id":"12345",
             "status":"verified",   // updated by bgv vendor
             "remarks":"Not Qualified"
         },
-        {
-            "stage_num" : 5,
-            "name" : "offer_letter",
+        "offerLetter" : {
+            "stage" : 5,
             "offer_id":"12345",
             "status":"accepted",   // offer generated 
             "sent_status" : true
         }
  
-]}
+}}
